@@ -1,20 +1,4 @@
 # arch-hisoka
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠟⠉⢉⠹⠛⣛⣛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⡜⣰⠆⢰⣩⣮⡾⣂⣠⣀⠭⣻⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⡼⢾⠟⠛⡿⠋⠉⠉⠉⠲⣞⠧⡘⡫⡛⣻⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⣀⡀⢇⠀⠀⣩⠀⠠⡙⣼⣭⡺⣾⢻⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡍⢴⡬⢶⠀⠘⢷⡒⠗⠈⡿⣍⡻⠺⣓⣶⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢧⣀⡭⢠⠂⠀⠀⢀⡇⢠⡧⣟⡍⡳⡦⣺⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡎⠁⠈⠃⠀⠀⠀⠁⣸⣽⣮⣙⣻⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠄⠒⠒⠠⠀⣰⠁⢿⢿⣿⣷⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⢀⡠⠊⡎⠀⠈⡰⢹⢻⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢧⠈⠧⢀⠠⠋⡠⠊⡠⠂⣸⠈⠙⠻⠿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⠑⠤⠈⠁⠤⠐⢁⠠⠊⡠⠊⣞⠁⠀⠀⠀⡠⠊
-⣿⣿⣿⣿⣿⣿⣿⣿⡿⢟⡟⢄⠑⠀⠀⠀⠒⢈⣠⡴⠊⠀⡰⡍⠀⡐⢀⠌⠠⠀
-⣿⣿⣿⣿⣿⡿⡟⡜⠀⣼⠀⠀⠈⢷⣶⣿⣿⡿⠋⠀⠀⠀⠱⠀⢠⢠⠇⡰⠁⠀
-⣿⣿⣿⡿⠋⢰⢠⠃⠀⠁⠀⠀⠀⠘⣿⣿⠟⠁⠀⠀⣤⡀⠀⠀⠘⡎⢠⢃⢀⠀
-⣿⣿⡟⠁⠀⡆⢸⠀⠀⣶⣶⡄⠀⠀⠸⠋⠀⠀⢠⣾⣿⣿⣦⡀⠀⡇⡀⠀⡀⠀
-
 
 This repository contains my custom Arch Linux configuration, built upon Manjaro Linux. It features simple yet effective configurations tailored for my Linux desktop environment. This project draws inspiration from the following repositories:
 
