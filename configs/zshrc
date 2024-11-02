@@ -1,0 +1,32 @@
+# Use powerline
+# Has weird character width
+# Example:
+#    is not a diamond
+#Source manjaro-zsh-configuration
+# if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+#   source /usr/share/zsh/manjaro-zsh-config
+# fi
+# # Use manjaro zsh prompt
+# if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+#   source /usr/share/zsh/manjaro-zsh-prompt
+# fi
+
+USE_POWERLINE="true"
+HAS_WIDECHARS="false"
+
+# zsh tools
+eval "$(starship init zsh)"
+eval "$(mise activate zsh)"
+
+# zsh plugins
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# alias files
+alias ls='ls --color' 
+
+# variables
+export FLUTTER_ROOT="$(mise where flutter)"
+export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
+export PATH=${PATH}:$HOME/Android/Sdk/platform-tools/
