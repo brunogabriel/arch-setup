@@ -31,6 +31,9 @@ This repository contains my custom Arch Linux configuration, built upon Manjaro 
 - [basecamp/omakub](https://github.com/basecamp/omakub)
 - [akitaonrails/omakub-mj](https://github.com/akitaonrails/omakub-mj)
 
+While this repository is almost a fork, I created my own to practice terminal skills, and some applications are different from the originals. If you're looking for a complete experience with more tools, please consider using omakub for Ubuntu and omakub-mj for Manjaro.
+
+
 ## How to Run
 
 To set up the configuration, simply execute the `install.sh` script. You will be prompted to enter your full name and email address, which will be used for your Git configuration. Maybe you need 
