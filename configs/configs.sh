@@ -4,4 +4,4 @@ gum spin -s line --title "Copy zshrc..." -- sleep 1 && cp ./configs/zshrc ~/.zsh
 
 gum spin -s line --title "Copy kitty configs..." -- sleep 1 && cp -r ./configs/kitty ~/.config
 
-gum spin -s line --title "Copy fastfetch configs..." -- sleep 1 && cp -r ./fastfetch ~/.config
+gum spin -s line --title "Copy fastfetch configs..." -- sleep 1 && cp -r ./configs/fastfetch ~/.config

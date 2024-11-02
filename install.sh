@@ -1,5 +1,6 @@
-#source ./install/terminal/required/app-gum.sh
 source ./ascii.sh
+
+source ./install/terminal/required/app-gum.sh
 
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "Hello, there! Welcome to $(gum style --foreground 212 'Arch Hisoka')."
 

@@ -13,6 +13,10 @@
 
 USE_POWERLINE="true"
 HAS_WIDECHARS="false"
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 
 # zsh tools
 eval "$(starship init zsh)"
@@ -27,6 +31,4 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 alias ls='ls --color' 
 
 # variables
-export FLUTTER_ROOT="$(mise where flutter)"
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
-export PATH=${PATH}:$HOME/Android/Sdk/platform-tools/
