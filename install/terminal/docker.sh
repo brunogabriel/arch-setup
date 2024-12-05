@@ -7,3 +7,5 @@ sudo mkdir -p /etc/docker
 sudo systemctl restart docker.service
 
 sudo systemctl enable docker.service
+
+newgrp docker
