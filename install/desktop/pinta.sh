@@ -1,0 +1,1 @@
+flatpak install --or-update -y com.github.PintaProject.Pinta
