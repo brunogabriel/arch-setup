@@ -1,0 +1,1 @@
+yay -S --needed cursor-bin --noconfirm
