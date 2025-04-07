@@ -1,6 +1,6 @@
 echo -e "Configuring your tools $(gum style --foreground 212 "$settings")."
 
-gum spin -s line --title "Copy zshrc..." -- sleep 1 && cp ./configs/zshrc ~/.zshrc
+gum spin -s line --title "Copy zshrc configs..." -- bash -c 'for file in ./configs/zsh/*; do cp -v "$file" ~/."$(basename "$file")"; done'
 
 gum spin -s line --title "Copy kitty configs..." -- sleep 1 && cp -r ./configs/kitty ~/.config
 
