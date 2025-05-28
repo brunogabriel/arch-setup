@@ -13,8 +13,14 @@ sleep 1; clear
 gum spin --spinner monkey --title "Well, it's time do configure your Arch $(gum style --foreground 212 "$NAME")..." -- sleep 2
 
 # installs
+
+# terminal tools
 source ./install/terminal.sh
-source ./install/desktop.sh
+
+# desktop tools
+if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]] || [[ "$XDG_CURRENT_DESKTOP" == *"KDE"* ]]; then
+  source ./install/desktop.sh
+fi
 
 # configs
 source ./configs/configs.sh
@@ -24,5 +30,3 @@ git config --global user.name "$GITHUB_NAME"
 git config --global user.email "$GITHUB_EMAIL"
 
 echo -e "Your setup is finished, $(gum style --foreground 212 "$NAME")"
-
-
