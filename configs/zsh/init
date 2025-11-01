@@ -15,3 +15,7 @@ if command -v fzf &> /dev/null; then
   [ -r /usr/share/bash-completion/completions/fzf ] && . /usr/share/bash-completion/completions/fzf
   [ -r /usr/share/doc/fzf/examples/key-bindings.bash ] && . /usr/share/doc/fzf/examples/key-bindings.bash
 fi
+
+if command -v fastfetch &> /dev/null; then
+  fastfetch
+fi
