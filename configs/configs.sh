@@ -8,4 +8,6 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]] || [[ "$XDG_CURRENT_DESKTOP" == *"K
   gum spin -s line --title "Copy fastfetch configs..." -- sleep 1 && cp -r ./configs/fastfetch ~/.config
 
   gum spin -s line --title "Copy warp terminal configs..." -- sleep 1 && cp -r ./configs/warp-terminal ~/.local/share
+
+  gum spin -s line --title "Copy btop configs..." -- sleep 1 && cp -r ./configs/btop ~/.config
 fi
