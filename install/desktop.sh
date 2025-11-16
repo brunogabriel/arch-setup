@@ -1,6 +1,6 @@
-echo "Installing desktop applications..."
+gum style --foreground 212 "Installing desktop applications..."
 
 # desktop apps
 for desktop in ./install/desktop/*.sh; do source $desktop; done
 
-echo "Finished installing all desktop applications"
+gum style --foreground 212 "Desktop applications installed."

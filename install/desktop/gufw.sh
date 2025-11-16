@@ -1,6 +1,6 @@
 yay -S --needed gufw --noconfirm
 
-echo "Configuring UFW firewall default rules..."
+gum style --foreground 212 "Confuguring UFW firewall default rules..."
 
 sudo ufw default deny incoming
 sudo ufw default allow outgoing

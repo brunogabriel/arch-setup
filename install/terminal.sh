@@ -1,4 +1,5 @@
-echo "Installing terminal tools..."
+gum style --foreground 212 "Installing terminal tools..."
+
 
 # base
 sudo pacman -Syyuu --noconfirm
@@ -11,4 +12,4 @@ sudo pacman -S --needed yay --noconfirm
 # terminal tools
 for installer in ./install/terminal/*.sh; do source $installer; done
 
-echo "Finished installing all terminal tools"
+gum style --foreground 212 "Terminal tools installed."
