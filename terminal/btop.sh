@@ -33,47 +33,25 @@ install_btop() {
     fi
 }
 
-# Configure btop (optional)
+# Configure btop with theme
 configure_btop() {
     local config_dir="$HOME/.config/btop"
-    local config_file="$config_dir/btop.conf"
+    local themes_dir="$config_dir/themes"
     
-    # Create config directory if it doesn't exist
-    if [ ! -d "$config_dir" ]; then
-        mkdir -p "$config_dir"
-        log_info "Created btop config directory: $config_dir"
-    fi
+    log_info "Configuring btop with theme..."
     
-    # Check if config already exists
-    if [ -f "$config_file" ]; then
-        log_info "btop config already exists, skipping configuration"
+    # Create directories
+    mkdir -p "$config_dir"
+    mkdir -p "$themes_dir"
+    
+    # Apply theme using theme system
+    if apply_theme_for_app "btop" "$config_dir"; then
+        log_success "btop configured with $(get_current_theme) theme"
         return 0
+    else
+        log_warning "Failed to apply theme, using defaults"
+        return 1
     fi
-    
-    # Create basic config (optional - btop works fine with defaults)
-    # You can customize this based on your preferences
-    cat > "$config_file" << 'EOF'
-# btop config
-
-#* Color theme
-color_theme = "Default"
-
-#* Update time in milliseconds
-update_ms = 2000
-
-#* Show CPU temperature
-show_cpu_temps = True
-
-#* Show disk IO
-show_disks = True
-
-#* Show network stats
-net_download = True
-net_upload = True
-EOF
-    
-    log_success "btop configured with default settings"
-    return 0
 }
 
 # Uninstall btop (for future use)

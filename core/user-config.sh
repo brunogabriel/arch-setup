@@ -31,6 +31,7 @@ load_user_config() {
 save_user_config() {
     local name=$1
     local email=$2
+    local theme=${3:-"moonlight"}  # Default to moonlight if not provided
     
     ensure_config_dir
     
@@ -41,6 +42,7 @@ USER_EMAIL="$email"
 GIT_CONFIGURED=false
 CONFIGURED=true
 CONFIGURED_AT="$(date '+%Y-%m-%d %H:%M:%S')"
+SELECTED_THEME="$theme"
 EOF
     
     chmod 600 "$USER_CONFIG_FILE"
