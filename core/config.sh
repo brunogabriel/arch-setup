@@ -11,6 +11,7 @@ APP_DESCRIPTION="Interactive CLI for Arch Linux setup"
 CONFIG_DIR="$HOME/.config/arch-setup"
 BACKUP_DIR="$HOME/.arch-setup-backups"
 LOG_FILE="$CONFIG_DIR/arch-setup.log"
+STATE_FILE="$CONFIG_DIR/state.conf"
 
 # Requirements
 REQUIRED_PACKAGES=(

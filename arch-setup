@@ -14,6 +14,7 @@ source "$INSTALL_DIR/core/colors.sh"
 source "$INSTALL_DIR/core/logger.sh"
 source "$INSTALL_DIR/core/requirements.sh"
 source "$INSTALL_DIR/core/user-config.sh"
+source "$INSTALL_DIR/core/terminal.sh"
 
 # Main menu
 main_menu() {
@@ -60,8 +61,7 @@ main_menu() {
                 configure_user
                 ;;
             3)
-                gum style --foreground 214 "TODO: Install Terminal Tools"
-                gum confirm "Press Enter to continue..." && true
+                install_terminal_tools
                 ;;
             4)
                 gum style --foreground 214 "TODO: Install Desktop Applications"
