@@ -15,7 +15,11 @@ install_btop() {
     # Check if already installed
     if is_btop_installed; then
         gum style --foreground 75 "  btop is already installed"
-        log_info "btop is already installed, skipping"
+        log_info "btop is already installed, applying theme..."
+        
+        # Apply theme even if already installed
+        configure_btop
+        
         return 0
     fi
     
@@ -23,7 +27,7 @@ install_btop() {
     if yay -S --needed --noconfirm btop; then
         log_success "btop installed successfully"
         
-        # Configure btop (optional)
+        # Configure btop with theme
         configure_btop
         
         return 0

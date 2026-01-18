@@ -129,14 +129,80 @@ apply_theme_for_app() {
     # Create destination directory if it doesn't exist
     mkdir -p "$dest_dir"
     
+    # Create themes subdirectory if app needs it (e.g., btop/themes/)
+    if [ -d "$theme_source/themes" ]; then
+        mkdir -p "$dest_dir/themes"
+    fi
+    
     # Copy all theme files
     if cp -r "$theme_source"/* "$dest_dir/"; then
         log_success "Applied $theme theme for $app_name"
+        gum style --foreground 48 "  ✓ Theme applied: $theme"
         return 0
     else
         log_error "Failed to apply theme for $app_name"
         return 1
     fi
+}
+
+# Apply current theme to all installed applications
+# Detects which apps are installed and applies theme to each
+apply_current_theme() {
+    local theme=$(get_current_theme)
+    
+    gum style \
+        --border rounded \
+        --border-foreground 81 \
+        --padding "1 2" \
+        --bold \
+        "Applying Theme: $theme"
+    
+    echo ""
+    log_info "Applying theme $theme to all installed applications..."
+    
+    local apps_updated=0
+    local apps_skipped=0
+    
+    # Check and apply theme for btop
+    if command -v btop &> /dev/null; then
+        gum style --foreground 81 "→ Applying theme to btop..."
+        if apply_theme_for_app "btop" "$HOME/.config/btop"; then
+            ((apps_updated++))
+        else
+            ((apps_skipped++))
+        fi
+    else
+        log_info "btop not installed, skipping"
+        ((apps_skipped++))
+    fi
+    
+    # Add more apps here as you implement them
+    # Example:
+    # if command -v alacritty &> /dev/null; then
+    #     gum style --foreground 81 "→ Applying theme to alacritty..."
+    #     if apply_theme_for_app "alacritty" "$HOME/.config/alacritty"; then
+    #         ((apps_updated++))
+    #     else
+    #         ((apps_skipped++))
+    #     fi
+    # fi
+    
+    echo ""
+    
+    # Summary
+    gum style \
+        --border rounded \
+        --border-foreground 81 \
+        --padding "1 2" \
+        "Theme Application Summary" \
+        "" \
+        "$(gum style --foreground 48 "✓ Apps updated: $apps_updated")" \
+        "$(gum style --foreground 245 "○ Apps skipped: $apps_skipped")"
+    
+    log_info "Theme application completed: $apps_updated updated, $apps_skipped skipped"
+    
+    echo ""
+    return 0
 }
 
 # Theme management menu
