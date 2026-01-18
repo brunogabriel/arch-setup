@@ -1,0 +1,96 @@
+#!/bin/bash
+
+# arch-setup - Interactive CLI for Manjaro/Arch Linux setup
+# Author: Bruno
+
+set -e
+
+# Get installation directory
+INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Load core utilities
+source "$INSTALL_DIR/core/config.sh"
+source "$INSTALL_DIR/core/colors.sh"
+source "$INSTALL_DIR/core/requirements.sh"
+
+# Main menu
+main_menu() {
+    while true; do
+        clear
+        
+        # Header
+        gum style \
+            --border double \
+            --border-foreground 81 \
+            --align center \
+            --width 50 \
+            --padding "1 2" \
+            --margin "1 0" \
+            "$(gum style --foreground 81 --bold "$APP_NAME") $(gum style --foreground 245 "v$APP_VERSION")" \
+            "$(gum style --foreground 75 "$APP_DESCRIPTION")"
+        
+        echo ""
+        
+        # Menu options
+        choice=$(gum choose \
+            --cursor.foreground 81 \
+            --header "What would you like to do?" \
+            --header.foreground 81 \
+            "1. Install All (Terminal + Desktop)" \
+            "2. Configure System (Git, User Info)" \
+            "3. Install Terminal Tools" \
+            "4. Install Desktop Applications" \
+            "5. Install Programming Languages (mise)" \
+            "6. Apply Dotfiles Configuration" \
+            "7. View Installation Status" \
+            "8. Update Installed Packages" \
+            "9. Exit")
+        
+        # Extract number from choice
+        option=$(echo "$choice" | cut -d. -f1)
+        
+        case "$option" in
+            1)
+                gum style --foreground 214 "TODO: Install All (Terminal + Desktop)"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            2)
+                gum style --foreground 214 "TODO: Configure System"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            3)
+                gum style --foreground 214 "TODO: Install Terminal Tools"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            4)
+                gum style --foreground 214 "TODO: Install Desktop Applications"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            5)
+                gum style --foreground 214 "TODO: Install Programming Languages"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            6)
+                gum style --foreground 214 "TODO: Apply Dotfiles"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            7)
+                gum style --foreground 214 "TODO: View Status"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            8)
+                gum style --foreground 214 "TODO: Update Packages"
+                gum confirm "Press Enter to continue..." && true
+                ;;
+            9)
+                clear
+                gum style --foreground 46 "Goodbye! 👋"
+                exit 0
+                ;;
+        esac
+    done
+}
+
+# Start
+check_requirements
+main_menu
