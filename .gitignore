@@ -1,0 +1,42 @@
+# Logs
+*.log
+/logs/
+arch-setup.log
+
+# Backups
+.arch-setup-backups/
+*.backup
+*.bak
+*.old
+
+# User configs
+config.local.yaml
+config.local.conf
+.env
+.env.local
+
+# Cache and temporary files
+.cache/
+*.swp
+*.swo
+*~
+*.tmp
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Test and development
+test-output/
+debug/
