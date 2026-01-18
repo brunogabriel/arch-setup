@@ -45,11 +45,12 @@ convert_to_modular_structure() {
     [ -f "$HOME/.aliases" ] && cp "$HOME/.aliases" "$backup_dir/aliases.backup.$timestamp"
     [ -f "$HOME/.shell" ] && cp "$HOME/.shell" "$backup_dir/shell.backup.$timestamp"
     
-    # Copy modular structure from configs
-    cp "$INSTALL_DIR/configs/zsh/zshrc" "$HOME/.zshrc"
-    cp "$INSTALL_DIR/configs/zsh/init" "$HOME/.init"
-    cp "$INSTALL_DIR/configs/zsh/aliases" "$HOME/.aliases"
-    cp "$INSTALL_DIR/configs/zsh/shell" "$HOME/.shell"
+    # Copy modular structure from configs ONLY if files don't exist
+    # This preserves any appended content from previous tool installations
+    [ ! -f "$HOME/.zshrc" ] && cp "$INSTALL_DIR/configs/zsh/zshrc" "$HOME/.zshrc"
+    [ ! -f "$HOME/.init" ] && cp "$INSTALL_DIR/configs/zsh/init" "$HOME/.init"
+    [ ! -f "$HOME/.aliases" ] && cp "$INSTALL_DIR/configs/zsh/aliases" "$HOME/.aliases"
+    [ ! -f "$HOME/.shell" ] && cp "$INSTALL_DIR/configs/zsh/shell" "$HOME/.shell"
     
     log_success "Converted to modular structure: ~/.zshrc → ~/.init, ~/.aliases, ~/.shell"
     
@@ -79,8 +80,10 @@ append_to_zsh_module() {
         touch "$module_file"
     fi
     
-    # Check if content already exists (exact match)
-    if grep -qF "$content" "$module_file"; then
+    # Check if content already exists
+    # For multiline content, check first line only to avoid grep issues
+    local first_line=$(echo "$content" | head -n1)
+    if grep -qF "$first_line" "$module_file"; then
         log_info "Content already exists in ~/.$module, skipping"
         return 0
     fi
