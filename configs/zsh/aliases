@@ -1,0 +1,9 @@
+# aliases
+# Command aliases and shortcuts
+# Managed by arch-setup
+
+# Directory navigation (generic - no dependencies)
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+

@@ -23,5 +23,14 @@ install_fastfetch() {
         log_warning "Fastfetch config not found: $config_source"
     fi
     
+    # Add fastfetch to zsh init if modular structure exists
+    if check_zshrc_structure 2>/dev/null; then
+        append_to_zsh_module "init" \
+            'if command -v fastfetch &> /dev/null; then
+  fastfetch
+fi' \
+            "fastfetch - System information tool"
+    fi
+    
     return 0
 }

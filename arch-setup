@@ -16,6 +16,7 @@ source "$INSTALL_DIR/core/requirements.sh"
 source "$INSTALL_DIR/core/user-config.sh"
 source "$INSTALL_DIR/core/themes.sh"
 source "$INSTALL_DIR/core/install-utils.sh"
+source "$INSTALL_DIR/core/zsh-config.sh"
 source "$INSTALL_DIR/core/terminal.sh"
 source "$INSTALL_DIR/core/desktop.sh"
 

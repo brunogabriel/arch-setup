@@ -1,0 +1,14 @@
+# shell
+# Shell configuration and environment variables
+# Managed by arch-setup
+
+# History configuration
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
+# Powerline
+USE_POWERLINE="true"
+HAS_WIDECHARS="false"
+
