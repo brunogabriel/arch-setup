@@ -6,23 +6,123 @@
 # Check and install requirements
 check_requirements() {
     echo -e "${COLOR_INFO}Checking requirements...${COLOR_RESET}"
+    log_info "Checking requirements..."
     
     # Check if gum is installed
     if ! command -v gum &> /dev/null; then
         echo -e "${COLOR_WARNING}⚠ gum is not installed${COLOR_RESET}"
         echo -e "${COLOR_INFO}Installing gum...${COLOR_RESET}"
+        log_warning "gum is not installed"
+        log_info "Installing gum..."
         
-        if sudo pacman -S --needed --noconfirm gum; then
+        if sudo pacman -S --needed --noconfirm gum 2>&1 | tee -a "$LOG_FILE"; then
             echo -e "${COLOR_SUCCESS}✓ gum installed successfully${COLOR_RESET}"
+            log_success "gum installed successfully"
         else
             echo -e "${COLOR_ERROR}✗ Failed to install gum${COLOR_RESET}"
             echo -e "${COLOR_ERROR}Please install gum manually: sudo pacman -S gum${COLOR_RESET}"
+            log_error "Failed to install gum"
             exit 1
         fi
     else
         echo -e "${COLOR_SUCCESS}✓ gum is installed${COLOR_RESET}"
+        log_info "gum is already installed"
     fi
     
     echo ""
     sleep 1
+}
+
+# Check and install installation requirements (for terminal/desktop packages)
+# This includes: curl, git, unzip, base-devel, yay
+# Also updates pacman database
+check_installation_requirements() {
+    log_info "Starting installation requirements check..."
+    
+    gum style \
+        --border rounded \
+        --border-foreground 81 \
+        --padding "1 2" \
+        --bold \
+        "Checking Installation Requirements"
+    
+    echo ""
+    
+    # Update pacman first
+    gum style --foreground 81 "→ Updating pacman database..."
+    log_info "Updating pacman database..."
+    
+    if sudo pacman -Syyuu --noconfirm 2>&1 | tee -a "$LOG_FILE"; then
+        gum style --foreground 48 "✓ Pacman updated successfully"
+        log_success "Pacman updated successfully"
+    else
+        gum style --foreground 196 "✗ Failed to update pacman"
+        log_error "Failed to update pacman"
+        return 1
+    fi
+    
+    echo ""
+    
+    # Check and install required packages
+    for package in "${REQUIRED_INSTALLATION_PACKAGES[@]}"; do
+        if ! command -v "$package" &> /dev/null && ! pacman -Qi "$package" &> /dev/null; then
+            gum style --foreground 214 "⚠ $package is not installed"
+            gum style --foreground 81 "→ Installing $package..."
+            log_warning "$package is not installed"
+            log_info "Installing $package..."
+            
+            if sudo pacman -S --needed --noconfirm "$package" 2>&1 | tee -a "$LOG_FILE"; then
+                gum style --foreground 48 "✓ $package installed successfully"
+                log_success "$package installed successfully"
+            else
+                gum style --foreground 196 "✗ Failed to install $package"
+                log_error "Failed to install $package"
+                return 1
+            fi
+        else
+            gum style --foreground 48 "✓ $package is installed"
+            log_info "$package is already installed"
+        fi
+    done
+    
+    echo ""
+    
+    # Check if yay is installed
+    if ! command -v yay &> /dev/null; then
+        gum style --foreground 214 "⚠ yay (AUR helper) is not installed"
+        gum style --foreground 81 "→ Installing yay..."
+        log_warning "yay (AUR helper) is not installed"
+        log_info "Installing yay from AUR..."
+        
+        # Install yay from AUR
+        local tmp_dir="/tmp/yay-install"
+        rm -rf "$tmp_dir"
+        mkdir -p "$tmp_dir"
+        
+        if git clone https://aur.archlinux.org/yay.git "$tmp_dir" 2>&1 | tee -a "$LOG_FILE" && \
+           cd "$tmp_dir" && \
+           makepkg -si --noconfirm 2>&1 | tee -a "$LOG_FILE"; then
+            gum style --foreground 48 "✓ yay installed successfully"
+            log_success "yay installed successfully"
+            cd - > /dev/null
+            rm -rf "$tmp_dir"
+        else
+            gum style --foreground 196 "✗ Failed to install yay"
+            log_error "Failed to install yay from AUR"
+            cd - > /dev/null
+            rm -rf "$tmp_dir"
+            return 1
+        fi
+    else
+        gum style --foreground 48 "✓ yay is installed"
+        log_info "yay is already installed"
+    fi
+    
+    echo ""
+    gum style --foreground 48 --bold "✓ All installation requirements are ready"
+    log_success "All installation requirements are ready"
+    echo ""
+    sleep 2
+    
+    return 0
 }

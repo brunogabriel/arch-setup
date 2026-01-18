@@ -10,11 +10,19 @@ APP_DESCRIPTION="Interactive CLI for Arch Linux setup"
 # Directories
 CONFIG_DIR="$HOME/.config/arch-setup"
 BACKUP_DIR="$HOME/.arch-setup-backups"
-LOG_FILE="$HOME/.arch-setup.log"
+LOG_FILE="$CONFIG_DIR/arch-setup.log"
 
 # Requirements
 REQUIRED_PACKAGES=(
     "gum"
+)
+
+# Installation requirements (checked before installing terminal/desktop packages)
+REQUIRED_INSTALLATION_PACKAGES=(
+    "curl"
+    "git"
+    "unzip"
+    "base-devel"
 )
 
 # flags

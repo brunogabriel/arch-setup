@@ -11,6 +11,7 @@ INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Load core utilities
 source "$INSTALL_DIR/core/config.sh"
 source "$INSTALL_DIR/core/colors.sh"
+source "$INSTALL_DIR/core/logger.sh"
 source "$INSTALL_DIR/core/requirements.sh"
 source "$INSTALL_DIR/core/user-config.sh"
 
@@ -92,5 +93,6 @@ main_menu() {
 }
 
 # Start
+init_logger
 check_requirements
 main_menu
