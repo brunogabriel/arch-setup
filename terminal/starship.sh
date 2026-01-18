@@ -10,14 +10,12 @@ install_starship() {
         return 1
     fi
     
-    # Add starship activation to zsh if modular structure exists
-    if check_zshrc_structure 2>/dev/null; then
-        append_to_zsh_module "init" \
-            'if command -v starship &> /dev/null; then
+    # Add starship activation to zsh
+    smart_append_to_zsh "init" \
+        'if command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
 fi' \
-            "starship - Cross-shell prompt"
-    fi
+        "starship - Cross-shell prompt"
     
     return 0
 }

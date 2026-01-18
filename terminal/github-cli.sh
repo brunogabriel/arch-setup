@@ -10,12 +10,10 @@ install_github_cli() {
         return 1
     fi
     
-    # Add git utility aliases to zsh if modular structure exists
-    if check_zshrc_structure 2>/dev/null; then
-        append_to_zsh_module "aliases" \
-            "alias gdel='git branch | grep -v \"main\" | xargs git branch -D'" \
-            "git - Delete all branches except main"
-    fi
+    # Add git utility aliases to zsh
+    smart_append_to_zsh "aliases" \
+        "alias gdel='git branch | grep -v \"main\" | xargs git branch -D'" \
+        "git - Delete all branches except main"
     
     return 0
 }

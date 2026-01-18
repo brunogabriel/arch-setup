@@ -45,9 +45,12 @@ convert_to_modular_structure() {
     [ -f "$HOME/.aliases" ] && cp "$HOME/.aliases" "$backup_dir/aliases.backup.$timestamp"
     [ -f "$HOME/.shell" ] && cp "$HOME/.shell" "$backup_dir/shell.backup.$timestamp"
     
-    # Copy modular structure from configs ONLY if files don't exist
+    # Always overwrite .zshrc with our modular structure (backup was already made)
+    cp "$INSTALL_DIR/configs/zsh/zshrc" "$HOME/.zshrc"
+    log_info "Created modular .zshrc (sources .init, .aliases, .shell)"
+    
+    # Copy module files ONLY if they don't exist
     # This preserves any appended content from previous tool installations
-    [ ! -f "$HOME/.zshrc" ] && cp "$INSTALL_DIR/configs/zsh/zshrc" "$HOME/.zshrc"
     [ ! -f "$HOME/.init" ] && cp "$INSTALL_DIR/configs/zsh/init" "$HOME/.init"
     [ ! -f "$HOME/.aliases" ] && cp "$INSTALL_DIR/configs/zsh/aliases" "$HOME/.aliases"
     [ ! -f "$HOME/.shell" ] && cp "$INSTALL_DIR/configs/zsh/shell" "$HOME/.shell"
@@ -134,4 +137,29 @@ install_zsh_plugins() {
     
     log_success "ZSH plugins installed"
     return 0
+}
+
+# Smart append to zsh module (auto-creates modular structure if needed)
+# This is a wrapper around append_to_zsh_module that ensures modular structure exists
+# Args:
+#   $1 - module name (init, aliases, shell)
+#   $2 - content to append
+#   $3 - comment/description (optional)
+smart_append_to_zsh() {
+    local module="$1"
+    local content="$2"
+    local comment="$3"
+    
+    # Ensure modular structure exists (create it if needed)
+    if ! check_zshrc_structure 2>/dev/null; then
+        log_info "ZSH modular structure not found, setting it up..."
+        if ! setup_zsh_config; then
+            log_warning "Failed to setup ZSH modular structure, skipping ZSH integration"
+            return 1
+        fi
+    fi
+    
+    # Now append content
+    append_to_zsh_module "$module" "$content" "$comment"
+    return $?
 }
