@@ -1,1 +1,0 @@
-flatpak install --or-update -y flathub io.podman_desktop.PodmanDesktop

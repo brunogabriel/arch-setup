@@ -1,1 +1,0 @@
-yay -S --needed google-gemini-cli --noconfirm

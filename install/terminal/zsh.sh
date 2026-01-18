@@ -1,1 +1,0 @@
-command -v zsh &> /dev/null || yay -S --needed zsh --noconfirm 

@@ -1,1 +1,0 @@
-yay -S --needed warp-terminal --noconfirm

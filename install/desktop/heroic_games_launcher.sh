@@ -1,1 +1,0 @@
-yay -S --needed heroic-games-launcher --noconfirm
