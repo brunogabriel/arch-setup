@@ -132,25 +132,15 @@ check_installation_requirements() {
         gum style --foreground 214 "⚠ yay (AUR helper) is not installed"
         gum style --foreground 81 "→ Installing yay..."
         log_warning "yay (AUR helper) is not installed"
-        log_info "Installing yay from AUR..."
+        log_info "Installing yay via pacman..."
         
-        # Install yay from AUR
-        local tmp_dir="/tmp/yay-install"
-        rm -rf "$tmp_dir"
-        mkdir -p "$tmp_dir"
-        
-        if git clone https://aur.archlinux.org/yay.git "$tmp_dir" && \
-           cd "$tmp_dir" && \
-           makepkg -si --noconfirm; then
+        # Install yay via pacman (available in Manjaro repos)
+        if sudo pacman -S --needed --noconfirm yay; then
             gum style --foreground 48 "✓ yay installed successfully"
             log_success "yay installed successfully"
-            cd - > /dev/null
-            rm -rf "$tmp_dir"
         else
             gum style --foreground 196 "✗ Failed to install yay"
-            log_error "Failed to install yay from AUR"
-            cd - > /dev/null
-            rm -rf "$tmp_dir"
+            log_error "Failed to install yay via pacman"
             return 1
         fi
     else
