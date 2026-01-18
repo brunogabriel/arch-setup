@@ -205,6 +205,30 @@ apply_current_theme() {
     return 0
 }
 
+# Apply theme for a specific app (called by install utilities)
+# Args:
+#   $1 - app name (e.g., "btop", "alacritty")
+apply_app_theme() {
+    local app_name=$1
+    
+    # Define config directories for each app
+    case "$app_name" in
+        btop)
+            apply_theme_for_app "btop" "$HOME/.config/btop"
+            ;;
+        alacritty)
+            apply_theme_for_app "alacritty" "$HOME/.config/alacritty"
+            ;;
+        neovim|nvim)
+            apply_theme_for_app "neovim" "$HOME/.config/nvim"
+            ;;
+        *)
+            log_info "No theme configuration defined for $app_name"
+            return 0
+            ;;
+    esac
+}
+
 # Theme management menu
 manage_themes() {
     gum style \

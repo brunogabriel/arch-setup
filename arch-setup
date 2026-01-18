@@ -15,6 +15,7 @@ source "$INSTALL_DIR/core/logger.sh"
 source "$INSTALL_DIR/core/requirements.sh"
 source "$INSTALL_DIR/core/user-config.sh"
 source "$INSTALL_DIR/core/themes.sh"
+source "$INSTALL_DIR/core/install-utils.sh"
 source "$INSTALL_DIR/core/terminal.sh"
 
 # Main menu

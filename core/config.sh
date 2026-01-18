@@ -1,6 +1,11 @@
 # arch-setup configuration file
 # This file contains global settings for the arch-setup CLI
 
+# Installation directory (where arch-setup is installed)
+if [ -z "$INSTALL_DIR" ]; then
+    INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+
 # Application metadata
 APP_NAME="arch-setup"
 APP_VERSION="1.0.0"
