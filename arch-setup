@@ -12,6 +12,7 @@ INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$INSTALL_DIR/core/config.sh"
 source "$INSTALL_DIR/core/colors.sh"
 source "$INSTALL_DIR/core/requirements.sh"
+source "$INSTALL_DIR/core/user-config.sh"
 
 # Main menu
 main_menu() {
@@ -55,8 +56,7 @@ main_menu() {
                 gum confirm "Press Enter to continue..." && true
                 ;;
             2)
-                gum style --foreground 214 "TODO: Configure System"
-                gum confirm "Press Enter to continue..." && true
+                configure_user
                 ;;
             3)
                 gum style --foreground 214 "TODO: Install Terminal Tools"
