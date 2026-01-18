@@ -54,14 +54,20 @@ install_terminal_tools() {
     fi
     
     # Show menu with available tools
-    gum style --foreground 81 --bold "Select tools to install:"
+    gum style --foreground 81 --bold "Select tools to install (all selected by default):"
     echo ""
+    
+    # Pre-select all tools by creating comma-separated list
+    local all_selected=$(IFS=,; echo "${available_tools[*]}")
     
     local selected_tools=$(gum choose \
         --no-limit \
+        --height 15 \
         --cursor.foreground 81 \
-        --header "Use Space to select, Enter to confirm" \
+        --selected.foreground 48 \
+        --header "Space=toggle | Enter=confirm | All selected by default" \
         --header.foreground 75 \
+        --selected "$all_selected" \
         "${available_tools[@]}")
     
     if [ -z "$selected_tools" ]; then
@@ -75,19 +81,28 @@ install_terminal_tools() {
     gum style --foreground 81 "Installing selected tools..."
     echo ""
     
+    # Debug: show selected tools
+    log_info "Selected tools: $selected_tools"
+    
     # Install each selected tool
     local success_count=0
     local fail_count=0
     
     while IFS= read -r tool; do
+        # Skip empty lines
+        [ -z "$tool" ] && continue
+        
         local script="$INSTALL_DIR/terminal/${tool}.sh"
         
         if [ -f "$script" ]; then
             log_info "Installing $tool..."
             gum style --foreground 81 "→ Installing $tool..."
             
+            # Convert tool name to function name (replace - with _)
+            local func_name=$(echo "$tool" | tr '-' '_')
+            
             # Source the script and call install function
-            if source "$script" && install_${tool}; then
+            if source "$script" && install_${func_name}; then
                 gum style --foreground 48 "✓ $tool installed successfully"
                 log_success "$tool installed successfully"
                 ((success_count++))

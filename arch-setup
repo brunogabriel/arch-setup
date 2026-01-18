@@ -3,7 +3,7 @@
 # arch-setup - Interactive CLI for Manjaro/Arch Linux setup
 # Author: Bruno
 
-set -e
+# Note: set -e removed to allow graceful error handling in loops
 
 # Get installation directory
 INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,6 +17,7 @@ source "$INSTALL_DIR/core/user-config.sh"
 source "$INSTALL_DIR/core/themes.sh"
 source "$INSTALL_DIR/core/install-utils.sh"
 source "$INSTALL_DIR/core/terminal.sh"
+source "$INSTALL_DIR/core/desktop.sh"
 
 # Main menu
 main_menu() {
@@ -66,8 +67,7 @@ main_menu() {
                 install_terminal_tools
                 ;;
             4)
-                gum style --foreground 214 "TODO: Install Desktop Applications"
-                gum confirm "Press Enter to continue..." && true
+                install_desktop_apps
                 ;;
             5)
                 gum style --foreground 214 "TODO: Install Programming Languages"
