@@ -176,16 +176,33 @@ apply_current_theme() {
         ((apps_skipped++))
     fi
     
+    # Check and apply theme for kitty
+    if command -v kitty &> /dev/null; then
+        gum style --foreground 81 "→ Applying theme to kitty..."
+        if apply_theme_for_app "kitty" "$HOME/.config/kitty"; then
+            ((apps_updated++))
+        else
+            ((apps_skipped++))
+        fi
+    else
+        log_info "kitty not installed, skipping"
+        ((apps_skipped++))
+    fi
+    
+    # Check and apply theme for warp-terminal
+    if command -v warp-terminal &> /dev/null; then
+        gum style --foreground 81 "→ Applying theme to warp-terminal..."
+        if apply_theme_for_app "warp-terminal" "$HOME/.warp/themes"; then
+            ((apps_updated++))
+        else
+            ((apps_skipped++))
+        fi
+    else
+        log_info "warp-terminal not installed, skipping"
+        ((apps_skipped++))
+    fi
+    
     # Add more apps here as you implement them
-    # Example:
-    # if command -v alacritty &> /dev/null; then
-    #     gum style --foreground 81 "→ Applying theme to alacritty..."
-    #     if apply_theme_for_app "alacritty" "$HOME/.config/alacritty"; then
-    #         ((apps_updated++))
-    #     else
-    #         ((apps_skipped++))
-    #     fi
-    # fi
     
     echo ""
     
