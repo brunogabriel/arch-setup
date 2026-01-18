@@ -19,6 +19,7 @@ source "$INSTALL_DIR/core/install-utils.sh"
 source "$INSTALL_DIR/core/zsh-config.sh"
 source "$INSTALL_DIR/core/terminal.sh"
 source "$INSTALL_DIR/core/desktop.sh"
+source "$INSTALL_DIR/core/mise-install.sh"
 
 # Install All - Terminal Tools + Desktop Applications
 install_all() {
@@ -383,8 +384,7 @@ main_menu() {
                 install_desktop_apps
                 ;;
             5)
-                gum style --foreground 214 "TODO: Install Programming Languages"
-                gum confirm "Press Enter to continue..." && true
+                install_programming_language
                 ;;
             6)
                 view_installation_status
