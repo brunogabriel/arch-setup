@@ -3,6 +3,123 @@
 # core/mise-install.sh
 # Programming languages installation orchestrator via mise
 
+# Generic language installer via mise
+#
+# Usage:
+#   mise_install_language \
+#     --name        "Display Name"          (required) e.g. "Flutter"
+#     --package     "mise-package"          (required) e.g. "flutter"
+#     --default     "latest"               (optional, default: "latest")
+#     --placeholder "e.g., 3.16.0, stable" (optional)
+#     --description "Extra info line"      (optional, shown in header box)
+#     --post-install "callback_function"   (optional, called after success)
+#     --version-cmd "flutter --version"    (optional, shown after install)
+#
+# Returns: 0 on success, 1 on failure
+mise_install_language() {
+    local name="" package="" default_version="latest"
+    local placeholder="" description="" post_install_cb="" version_cmd=""
+
+    # Parse named arguments
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --name)        name="$2";            shift 2 ;;
+            --package)     package="$2";         shift 2 ;;
+            --default)     default_version="$2"; shift 2 ;;
+            --placeholder) placeholder="$2";     shift 2 ;;
+            --description) description="$2";     shift 2 ;;
+            --post-install) post_install_cb="$2"; shift 2 ;;
+            --version-cmd) version_cmd="$2";     shift 2 ;;
+            *) shift ;;
+        esac
+    done
+
+    log_info "Installing $name via mise..."
+
+    # Check if mise is installed
+    if ! command -v mise &> /dev/null; then
+        gum style --foreground 196 "✗ mise is not installed!"
+        gum style --foreground 214 "→ Please install Terminal Tools first (Option 3)"
+        log_error "mise not installed - cannot install $name"
+        return 1
+    fi
+
+    # Build header box lines
+    local header_lines=("$name Installation" "" "$(gum style --foreground 75 "Choose version to install:")")
+    [ -n "$description" ] && header_lines+=("$(gum style --foreground 69 "$description")")
+
+    gum style \
+        --border rounded \
+        --border-foreground 81 \
+        --padding "1 2" \
+        "${header_lines[@]}"
+
+    echo ""
+
+    # Determine label for recommended option
+    local recommended_label="$default_version (Recommended)"
+
+    local version_choice
+    version_choice=$(gum choose \
+        --cursor.foreground 81 \
+        --selected.foreground 48 \
+        "$recommended_label" \
+        "Custom version")
+
+    local version=""
+    case "$version_choice" in
+        "$recommended_label")
+            version="$default_version"
+            ;;
+        "Custom version")
+            local ph="${placeholder:-"e.g., version number"}"
+            version=$(gum input \
+                --placeholder "$ph" \
+                --prompt "Version: ")
+
+            if [ -z "$version" ]; then
+                gum style --foreground 196 "✗ No version provided"
+                log_error "No $name version provided"
+                return 1
+            fi
+            ;;
+        *)
+            gum style --foreground 196 "✗ Invalid choice"
+            return 1
+            ;;
+    esac
+
+    echo ""
+    gum style --foreground 81 "→ Installing $name@$version via mise..."
+    log_info "Installing $name@$version via mise..."
+
+    if mise use -g "${package}@${version}" 2>&1 | tee -a "$LOG_FILE"; then
+        echo ""
+        gum style --foreground 48 "✓ $name@$version installed successfully"
+        log_success "$name@$version installed via mise"
+
+        # Run post-install callback if provided
+        if [ -n "$post_install_cb" ] && declare -f "$post_install_cb" > /dev/null; then
+            "$post_install_cb"
+        fi
+
+        # Show installed version
+        if [ -n "$version_cmd" ]; then
+            echo ""
+            local installed_version
+            installed_version=$(eval "$version_cmd" 2>/dev/null | head -n1)
+            [ -n "$installed_version" ] && gum style --foreground 75 "Installed: $installed_version"
+        fi
+
+        return 0
+    else
+        echo ""
+        gum style --foreground 196 "✗ Failed to install $name@$version"
+        log_error "Failed to install $name@$version"
+        return 1
+    fi
+}
+
 # Get list of available languages in mise_installs directory
 get_mise_languages() {
     local languages=()
