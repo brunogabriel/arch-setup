@@ -249,7 +249,6 @@ view_installation_status() {
             "vscode") check_cmd="code" ;;
             "brave") check_cmd="brave" ;;
             "cursor") check_cmd="cursor" ;;
-            "warp-terminal") check_cmd="warp-terminal" ;;
             "jetbrains-toolbox") check_cmd="jetbrains-toolbox" ;;
             "bitwarden") check_cmd="bitwarden-desktop" ;;
             "heroic-games-launcher") check_cmd="heroic" ;;

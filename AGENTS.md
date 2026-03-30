@@ -19,7 +19,7 @@ arch-setup/
 │   ├── logger.sh          # Logging system (~/.config/arch-setup/arch-setup.log)
 │   ├── requirements.sh    # Dependency checker + pacman/yay setup
 │   ├── user-config.sh     # User configuration (name/email/theme)
-│   ├── themes.sh          # Theme management (btop, kitty, warp)
+│   ├── themes.sh          # Theme management (btop, kitty)
 │   ├── install-utils.sh   # Universal install utilities (yay_install)
 │   ├── zsh-config.sh      # ZSH modular configuration system
 │   ├── terminal.sh        # Terminal tools orchestrator
@@ -32,7 +32,7 @@ arch-setup/
 ├── mise_installs/         # Programming language installers
 │   └── flutter.sh        # Example: version selection + PATH config
 ├── configs/zsh/           # Modular ZSH configs (zshrc, init, aliases, shell)
-├── themes/moonlight/      # Theme configs (btop, kitty, warp-terminal)
+├── themes/moonlight/      # Theme configs (btop, kitty)
 └── README.md
 ```
 
