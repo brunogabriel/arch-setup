@@ -10,6 +10,9 @@ _flutter_post_install() {
 }
 
 install_flutter() {
+    log_info "Adding asdf-flutter plugin for up-to-date releases..."
+    mise plugin add flutter https://github.com/oae/asdf-flutter 2>/dev/null || true
+
     mise_install_language \
         --name         "Flutter" \
         --package      "flutter" \
