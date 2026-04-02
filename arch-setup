@@ -20,6 +20,7 @@ source "$INSTALL_DIR/core/zsh-config.sh"
 source "$INSTALL_DIR/core/terminal.sh"
 source "$INSTALL_DIR/core/desktop.sh"
 source "$INSTALL_DIR/core/mise-install.sh"
+source "$INSTALL_DIR/core/extras.sh"
 
 # Install All - Terminal Tools + Desktop Applications
 install_all() {
@@ -363,8 +364,9 @@ main_menu() {
             "3. Install Terminal Tools" \
             "4. Install Desktop Applications" \
             "5. Install Programming Languages (mise)" \
-            "6. View Installation Status" \
-            "7. Exit")
+            "6. System / Hardware Extras" \
+            "7. View Installation Status" \
+            "8. Exit")
         
         # Extract number from choice
         option=$(echo "$choice" | cut -d. -f1)
@@ -386,9 +388,12 @@ main_menu() {
                 install_programming_language
                 ;;
             6)
-                view_installation_status
+                install_extras
                 ;;
             7)
+                view_installation_status
+                ;;
+            8)
                 clear
                 gum style --foreground 46 "Goodbye! 👋"
                 exit 0
