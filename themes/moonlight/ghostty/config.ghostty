@@ -1,0 +1,56 @@
+# Moonlight Theme
+# Port of moonlight vscode extension
+# upstream: https://github.com/ramonsaraiva/kitty-moonlight
+
+background = #212337
+foreground = #e4f3fa
+
+selection-background = #403c64
+selection-foreground = #e4f3fa
+
+cursor-color = #5cb4fc
+cursor-text = #111111
+
+# Normal colors
+palette = 0=#000000
+palette = 1=#ff757f
+palette = 2=#2df4c0
+palette = 3=#ffc777
+palette = 4=#04d1f9
+palette = 5=#ecb2f0
+palette = 6=#b994f1
+palette = 7=#eeffff
+
+# Bright colors
+palette = 8=#767676
+palette = 9=#f78b92
+palette = 10=#4ff0c6
+palette = 11=#fcce8b
+palette = 12=#2ddbfc
+palette = 13=#ebc5ed
+palette = 14=#bf9ef0
+palette = 15=#edf7f7
+
+# Fonts
+font-family = FiraCode Nerd Font
+font-style = Regular
+font-style-bold = Bold
+font-style-italic = Italic
+font-style-bold-italic = Bold Italic
+font-size = 11
+
+# Window
+background-opacity = 0.80
+background-opacity-cells = true
+window-padding-x = 4
+window-padding-y = 4
+window-padding-color = background
+window-padding-balance = true
+
+# Borders / decorations
+window-theme = ghostty
+window-titlebar-background = #212337
+window-titlebar-foreground = #e4f3fa
+
+# Misc
+confirm-close-surface = false
