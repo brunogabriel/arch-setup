@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**arch-setup** is an interactive CLI tool for automating Arch Linux/Manjaro system setup. Built with Bash and [gum](https://github.com/charmbracelet/gum) for terminal UI.
+**arch-setup** is an interactive CLI tool for automating Arch Linux-based system setup (EndeavourOS, Manjaro, etc.). Built with Bash and [gum](https://github.com/charmbracelet/gum) for terminal UI.
 
 **Architecture:** Clean Architecture (KISS principle) - modular, simple, no over-engineering.
 
@@ -12,8 +12,8 @@
 
 ```
 arch-setup/
-├── arch-setup              # Main orchestrator (387 lines)
-├── core/                   # Core utilities (11 modules)
+├── arch-setup              # Main orchestrator + menu dispatch
+├── core/                   # Core utilities — sourced in order by arch-setup
 │   ├── config.sh          # Global config + INSTALL_DIR detection
 │   ├── colors.sh          # Arch Linux brand colors (81, 75, 69)
 │   ├── logger.sh          # Logging system (~/.config/arch-setup/arch-setup.log)
@@ -24,14 +24,17 @@ arch-setup/
 │   ├── zsh-config.sh      # ZSH modular configuration system
 │   ├── terminal.sh        # Terminal tools orchestrator
 │   ├── desktop.sh         # Desktop apps orchestrator
-│   └── mise-install.sh    # Programming languages orchestrator
-├── terminal/              # Terminal app installers (22 tools)
-│   └── *.sh              # Each tool has install_<tool>() function
-├── desktop/               # Desktop app installers (25 apps)
-│   └── *.sh              # Each app has install_<app>() function
-├── mise_installs/         # Programming language installers
-│   └── flutter.sh        # Example: version selection + PATH config
-├── configs/zsh/           # Modular ZSH configs (zshrc, init, aliases, shell)
+│   ├── mise-install.sh    # Programming languages orchestrator
+│   ├── extras.sh          # System/hardware extras orchestrator
+│   ├── install-all.sh     # Install all (terminal + desktop)
+│   ├── view-status.sh     # Installation status checker
+│   ├── custom-install.sh  # Custom individual tool picker
+│   └── exit.sh            # Exit handler
+├── terminal/              # One .sh per tool; each defines install_<tool>()
+├── desktop/               # One .sh per app; each defines install_<app>()
+├── mise_installs/         # One .sh per language; each defines install_<lang>()
+├── extras/                # One .sh per extra; bluetooth, firmware, etc.
+├── configs/               # App configurations (fastfetch, zsh)
 ├── themes/moonlight/      # Theme configs (btop, kitty)
 └── README.md
 ```
@@ -59,7 +62,7 @@ bash -c "source core/config.sh && source core/colors.sh && source core/logger.sh
 cat ~/.config/arch-setup/user.conf
 
 # Check installation status
-./arch-setup  # Select option 6: "View Installation Status"
+./arch-setup  # Select option 8: "View Installation Status"
 ```
 
 ### Syntax Check

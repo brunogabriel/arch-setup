@@ -1,6 +1,6 @@
 # arch-setup
 
-Interactive CLI tool for automated Arch Linux/Manjaro system setup.
+Interactive CLI tool for automated Arch Linux-based system setup (EndeavourOS, Manjaro, etc.).
 
 This project draws inspiration from the following repositories:
 
@@ -28,7 +28,7 @@ While arch-setup is almost a fork, I created my own to practice terminal skills 
 
 ### Prerequisites
 
-- Arch Linux or Manjaro
+- Arch Linux, EndeavourOS, or Manjaro
 - Bash 4.0+
 - Internet connection
 
@@ -47,21 +47,11 @@ cd arch-setup
 ```
 arch-setup/
 ├── arch-setup              # Main entry point
-├── core/                   # Core utilities
-│   ├── config.sh
-│   ├── colors.sh
-│   ├── logger.sh
-│   ├── requirements.sh
-│   ├── user-config.sh
-│   ├── themes.sh
-│   ├── install-utils.sh
-│   ├── zsh-config.sh
-│   ├── terminal.sh
-│   ├── desktop.sh
-│   └── mise-install.sh
-├── terminal/               # Terminal tool installers
-├── desktop/                # Desktop app installers
-├── mise_installs/          # Programming language installers
+├── core/                   # Core utilities, sourced in order by the main script
+├── terminal/               # Terminal tool installers (one .sh per tool)
+├── desktop/                # Desktop app installers (one .sh per app)
+├── mise_installs/          # Programming language installers (one .sh per language)
+├── extras/                 # System/hardware extras
 ├── configs/                # Application configurations
 │   ├── fastfetch/
 │   └── zsh/
@@ -174,7 +164,7 @@ The application automatically appears in the menu.
 
 ## Package Sources
 
-- **pacman** - Official Arch/Manjaro repositories
+- **pacman** - Official Arch-based repositories
 - **yay** - AUR (Arch User Repository)
 - **flatpak** - For select applications
 - **mise** - Language version management
@@ -212,5 +202,5 @@ This project was inspired by:
 Special thanks to:
 
 - [Charm](https://charm.sh/) for [gum](https://github.com/charmbracelet/gum)
-- The Arch Linux and Manjaro communities
+- The Arch Linux, EndeavourOS, and Manjaro communities
 - All open-source tool maintainers
