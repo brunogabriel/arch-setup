@@ -3,6 +3,7 @@
 Interactive CLI tool for automated Arch Linux/Manjaro system setup.
 
 This project draws inspiration from the following repositories:
+
 - [basecamp/omakub](https://github.com/basecamp/omakub)
 - [akitaonrails/omakub-mj](https://github.com/akitaonrails/omakub-mj)
 
@@ -79,8 +80,10 @@ arch-setup/
 3. **Install Terminal Tools** - Select and install CLI tools
 4. **Install Desktop Applications** - Select and install desktop apps
 5. **Install Programming Languages** - Manage language versions via mise
-6. **View Installation Status** - Check what's installed
-7. **Exit**
+6. **System / Hardware Extras** - Bluetooth, firmware, and other extras
+7. **Custom Install** - Pick individual tools from terminal and/or desktop
+8. **View Installation Status** - Check what's installed
+9. **Exit**
 
 ---
 
@@ -96,6 +99,7 @@ arch-setup uses a modular ZSH configuration system:
 ```
 
 Tools automatically add their configurations when installed. The system:
+
 - Converts existing `.zshrc` to modular structure
 - Prevents duplicate entries
 - Keeps configurations organized by purpose
@@ -113,16 +117,16 @@ Create `terminal/toolname.sh`:
 
 install_toolname() {
     log_info "Installing toolname..."
-    
+
     if ! yay_install "package-name"; then
         return 1
     fi
-    
+
     # Optional: ZSH integration
     smart_append_to_zsh "aliases" \
         "alias tn='toolname'" \
         "toolname - Description"
-    
+
     return 0
 }
 ```
@@ -155,11 +159,11 @@ Create `desktop/appname.sh`:
 
 install_appname() {
     log_info "Installing appname..."
-    
+
     if ! yay_install "package-name"; then
         return 1
     fi
-    
+
     return 0
 }
 ```
@@ -201,10 +205,12 @@ arch-setup is released under the [MIT License](https://opensource.org/license/MI
 ## Credits
 
 This project was inspired by:
+
 - [basecamp/omakub](https://github.com/basecamp/omakub) - The original Ubuntu setup tool
 - [akitaonrails/omakub-mj](https://github.com/akitaonrails/omakub-mj) - Manjaro adaptation
 
 Special thanks to:
+
 - [Charm](https://charm.sh/) for [gum](https://github.com/charmbracelet/gum)
 - The Arch Linux and Manjaro communities
 - All open-source tool maintainers
