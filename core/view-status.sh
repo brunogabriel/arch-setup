@@ -98,17 +98,6 @@ view_installation_status() {
             "heroic-games-launcher") check_cmd="heroic" ;;
             "xournal-app") check_cmd="xournalpp" ;;
             "lsfg-vk") check_cmd="lsfg-vk-ui" ;;
-            "pinta") 
-                # Check via flatpak (com.github.PintaProject.Pinta)
-                if flatpak list --app 2>/dev/null | grep -qi "PintaProject.Pinta"; then
-                    gum style --foreground 48 "  ✓ $display_name (flatpak)"
-                    ((installed_count++))
-                else
-                    gum style --foreground 245 "  ○ $display_name (not installed)"
-                    ((not_installed_count++))
-                fi
-                is_installed=true
-                ;;
             "podman-desktop") 
                 # Check via flatpak (io.podman_desktop.PodmanDesktop)
                 if flatpak list --app 2>/dev/null | grep -qi "podman_desktop.PodmanDesktop"; then
@@ -124,11 +113,19 @@ view_installation_status() {
                 is_installed=true
                 ;;
             "tk") 
-                # Check via flatpak or command
-                if flatpak list --app 2>/dev/null | grep -qi "tk"; then
-                    gum style --foreground 48 "  ✓ $display_name (flatpak)"
+                # Check via python tkinter import (tk has no standalone command)
+                if python -c "import tkinter" &> /dev/null; then
+                    gum style --foreground 48 "  ✓ $display_name (installed)"
                     ((installed_count++))
-                elif command -v tk &> /dev/null; then
+                else
+                    gum style --foreground 245 "  ○ $display_name (not installed)"
+                    ((not_installed_count++))
+                fi
+                is_installed=true
+                ;;
+            "plasma-login-manager")
+                # No standalone command; check via package manager
+                if pacman -Q plasma-login-manager &> /dev/null; then
                     gum style --foreground 48 "  ✓ $display_name (installed)"
                     ((installed_count++))
                 else
