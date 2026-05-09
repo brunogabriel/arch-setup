@@ -198,6 +198,7 @@ view_installation_status() {
         
         # Special cases for command names and checks
         case "$tool" in
+            "github-copilot-cli") check_cmd="copilot" ;;
             "github-cli") check_cmd="gh" ;;
             "opencode") check_cmd="opencode" ;;
             "ripgrep") check_cmd="rg" ;;
