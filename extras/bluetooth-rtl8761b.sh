@@ -13,8 +13,8 @@
 #   processed with: xz -C crc32
 
 install_bluetooth_rtl8761b() {
-    local fw_src="$INSTALL_DIR/extras/firmware/rtl8761bu_fw.bin.xz"
-    local fw_dest="/lib/firmware/updates/rtl_bt/rtl8761bu_fw.bin.xz"
+    local fw_src="$INSTALL_DIR/extras/firmware/rtl8761bu_fw.bin"
+    local fw_dest="/lib/firmware/updates/rtl_bt/rtl8761bu_fw.bin"
     local fw_dest_dir="/lib/firmware/updates/rtl_bt"
 
     gum style \
