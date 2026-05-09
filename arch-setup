@@ -462,6 +462,36 @@ custom_install() {
     return 0
 }
 
+_menu_exit() {
+    clear
+    gum style --foreground 46 "Goodbye! 👋"
+    exit 0
+}
+
+# Menu items — add new entries here only: (title, action function)
+MENU_TITLES=(
+    "Install All (Terminal + Desktop)"
+    "Configure System (Git, User Info)"
+    "Install Terminal Tools"
+    "Install Desktop Applications"
+    "Install Programming Languages (mise)"
+    "System / Hardware Extras"
+    "Custom Install"
+    "View Installation Status"
+    "Exit"
+)
+MENU_ACTIONS=(
+    "install_all"
+    "configure_user"
+    "install_terminal_tools"
+    "install_desktop_apps"
+    "install_programming_language"
+    "install_extras"
+    "custom_install"
+    "view_installation_status"
+    "_menu_exit"
+)
+
 # Main menu
 main_menu() {
     while true; do
@@ -480,55 +510,21 @@ main_menu() {
         
         echo ""
         
-        # Menu options
+        local choice
         choice=$(gum choose \
             --cursor.foreground 81 \
             --header "What would you like to do?" \
             --header.foreground 81 \
-            "1. Install All (Terminal + Desktop)" \
-            "2. Configure System (Git, User Info)" \
-            "3. Install Terminal Tools" \
-            "4. Install Desktop Applications" \
-            "5. Install Programming Languages (mise)" \
-            "6. System / Hardware Extras" \
-            "7. Custom Install" \
-            "8. View Installation Status" \
-            "9. Exit")
+            "${MENU_TITLES[@]}")
         
-        # Extract number from choice
-        option=$(echo "$choice" | cut -d. -f1)
-        
-        case "$option" in
-            1)
-                install_all
-                ;;
-            2)
-                configure_user
-                ;;
-            3)
-                install_terminal_tools
-                ;;
-            4)
-                install_desktop_apps
-                ;;
-            5)
-                install_programming_language
-                ;;
-            6)
-                install_extras
-                ;;
-            7)
-                custom_install
-                ;;
-            8)
-                view_installation_status
-                ;;
-            9)
-                clear
-                gum style --foreground 46 "Goodbye! 👋"
-                exit 0
-                ;;
-        esac
+        # Dispatch: find the matching title and call its action
+        local i
+        for i in "${!MENU_TITLES[@]}"; do
+            if [ "${MENU_TITLES[$i]}" = "$choice" ]; then
+                "${MENU_ACTIONS[$i]}"
+                break
+            fi
+        done
     done
 }
 
