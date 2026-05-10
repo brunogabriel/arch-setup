@@ -98,6 +98,7 @@ view_installation_status() {
             "heroic-games-launcher") check_cmd="heroic" ;;
             "xournal-app") check_cmd="xournalpp" ;;
             "lsfg-vk") check_cmd="lsfg-vk-ui" ;;
+            "caffeine-ng") check_cmd="caffeine" ;;
             "podman-desktop") 
                 # Check via flatpak (io.podman_desktop.PodmanDesktop)
                 if flatpak list --app 2>/dev/null | grep -qi "podman_desktop.PodmanDesktop"; then
