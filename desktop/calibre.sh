@@ -4,5 +4,5 @@
 # Calibre ebook manager installer
 
 install_calibre() {
-    yay_install "calibre"
+    yay_install "calibre-bin"
 }
