@@ -22,7 +22,7 @@ The file `foo-bar.sh` must define `install_foo_bar()` (dashes → underscores). 
 | `colors.sh` | Arch brand colors (81 cyan, 75 blue, 48 green, 196 red, 214 orange) |
 | `logger.sh` | `log_info` / `log_success` / `log_warning` / `log_error` → `~/.config/arch-setup/arch-setup.log` |
 | `requirements.sh` | Installs `gum` (via raw `echo` before gum exists), then `check_installation_requirements()` for curl/git/unzip/base-devel/yay |
-| `install-utils.sh` | `pacman_install`, `yay_install`, `pacman_install_multiple`, `yay_install_multiple`, `is_installed` |
+| `install-utils.sh` | `pacman_install`, `yay_install`, `pacman_uninstall`, `yay_uninstall`, `is_installed` |
 | `run-installers.sh` | `scan_installers(subdir)`, `run_installers(items, subdir, show_progress)`, `show_install_summary()` |
 | `zsh-config.sh` | `smart_append_to_zsh(module, code, description)` — idempotent, modular (`~/.init`, `~/.aliases`, `~/.shell`) |
 | `themes.sh` | `apply_app_theme(name)`, `apply_theme_for_app(name, dir)` |
@@ -32,14 +32,17 @@ The file `foo-bar.sh` must define `install_foo_bar()` (dashes → underscores). 
 **Use `pacman_install` for official repos (default). Use `yay_install` only for AUR packages.**
 
 ```bash
-# Official repos (72% of packages)
+# Official repos
 pacman_install "fzf"
 
-# AUR only (28% — binários proprietários, apps de nicho)
+# Multiple packages at once
+pacman_install "docker" "docker-compose"
+
+# AUR only (proprietary binaries, niche apps)
 yay_install "cursor-bin"
 ```
 
-Both handle: already-installed check, installation, theme application, logging. `*_multiple` variants take multiple package names.
+Both accept one or more package names and handle: already-installed check, installation, theme application, logging.
 
 ## Verification
 

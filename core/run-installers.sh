@@ -44,25 +44,26 @@ run_installers() {
         ((current++))
 
         # Parse optional prefix: "[T] tool-name" or "[D] app-name"
-        local category="${item:0:1}"
+        local has_prefix=false
         local name=""
         local script=""
 
-        if [[ "$category" == "[" ]]; then
-            category="${item:1:1}"
+        if [[ "${item:0:1}" == "[" ]]; then
+            has_prefix=true
+            local subdir_hint="${item:1:1}"
             name="${item:4}"
         else
             name="$item"
         fi
 
         # Resolve script path
-        if [[ "$category" == "[" ]]; then
-            if [ "$category" = "T" ]; then
+        if [ "$has_prefix" = true ]; then
+            if [ "$subdir_hint" = "T" ]; then
                 script="$INSTALL_DIR/terminal/${name}.sh"
             else
                 script="$INSTALL_DIR/desktop/${name}.sh"
             fi
-        else
+        elif [ -n "$subdir" ]; then
             script="$INSTALL_DIR/$subdir/${name}.sh"
         fi
 

@@ -130,7 +130,7 @@ install_zsh_plugins() {
         "zsh-syntax-highlighting"
     )
     
-    if ! yay_install_multiple "${plugins[@]}"; then
+    if ! pacman_install "${plugins[@]}"; then
         log_error "Failed to install ZSH plugins"
         return 1
     fi

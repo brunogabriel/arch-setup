@@ -4,7 +4,7 @@
 # Install Nerd Fonts collection
 
 install_fonts() {
-    pacman_install_multiple \
+    pacman_install \
         "ttf-cascadia-mono-nerd" \
         "ttf-firacode-nerd" \
         "ttf-hack" \

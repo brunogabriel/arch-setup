@@ -11,56 +11,42 @@ is_installed() {
     command -v "$package" &> /dev/null
 }
 
-# Install package via pacman (official repos)
+# Install package(s) via pacman (official repos)
 # Args:
-#   $1 - package name
-#   $2 - app name for theme (optional, defaults to package name)
+#   $@ - one or more package names
 # Returns:
 #   0 on success, 1 on failure
 pacman_install() {
-    local package=$1
-    local app_name=${2:-$1}
-
-    log_info "Starting $package installation..."
-
-    if is_installed "$package"; then
-        gum style --foreground 75 "  $package is already installed"
-        log_info "$package is already installed"
-        apply_app_theme "$app_name"
-        return 0
-    fi
-
-    gum style --foreground 81 "→ Installing $package..."
-    if sudo pacman -S --needed --noconfirm "$package"; then
-        gum style --foreground 48 "✓ $package installed successfully"
-        log_success "$package installed successfully"
-        apply_app_theme "$app_name"
-        return 0
-    else
-        gum style --foreground 196 "✗ Failed to install $package"
-        log_error "Failed to install $package"
-        return 1
-    fi
-}
-
-# Install multiple packages via pacman
-# Args:
-#   $@ - package names
-pacman_install_multiple() {
     local packages=("$@")
     local success_count=0
     local fail_count=0
 
     for package in "${packages[@]}"; do
-        if pacman_install "$package"; then
+        log_info "Starting $package installation..."
+
+        if is_installed "$package"; then
+            gum style --foreground 75 "  $package is already installed"
+            log_info "$package is already installed"
+            apply_app_theme "$package"
+            ((success_count++))
+            continue
+        fi
+
+        gum style --foreground 81 "→ Installing $package..."
+        if sudo pacman -S --needed --noconfirm "$package"; then
+            gum style --foreground 48 "✓ $package installed successfully"
+            log_success "$package installed successfully"
+            apply_app_theme "$package"
             ((success_count++))
         else
+            gum style --foreground 196 "✗ Failed to install $package"
+            log_error "Failed to install $package"
             ((fail_count++))
         fi
         echo ""
     done
 
-    log_info "Installation completed: $success_count success, $fail_count failed"
+    [ ${#packages[@]} -gt 1 ] && log_info "Installation completed: $success_count success, $fail_count failed"
     return $fail_count
 }
 
@@ -88,56 +74,42 @@ pacman_uninstall() {
     fi
 }
 
-# Install package via yay (AUR)
+# Install package(s) via yay (AUR)
 # Args:
-#   $1 - package name
-#   $2 - app name for theme (optional, defaults to package name)
+#   $@ - one or more package names
 # Returns:
 #   0 on success, 1 on failure
 yay_install() {
-    local package=$1
-    local app_name=${2:-$1}
-
-    log_info "Starting $package installation..."
-
-    if is_installed "$package"; then
-        gum style --foreground 75 "  $package is already installed"
-        log_info "$package is already installed"
-        apply_app_theme "$app_name"
-        return 0
-    fi
-
-    gum style --foreground 81 "→ Installing $package..."
-    if yay -S --needed --noconfirm "$package"; then
-        gum style --foreground 48 "✓ $package installed successfully"
-        log_success "$package installed successfully"
-        apply_app_theme "$app_name"
-        return 0
-    else
-        gum style --foreground 196 "✗ Failed to install $package"
-        log_error "Failed to install $package"
-        return 1
-    fi
-}
-
-# Install multiple packages via yay
-# Args:
-#   $@ - package names
-yay_install_multiple() {
     local packages=("$@")
     local success_count=0
     local fail_count=0
 
     for package in "${packages[@]}"; do
-        if yay_install "$package"; then
+        log_info "Starting $package installation..."
+
+        if is_installed "$package"; then
+            gum style --foreground 75 "  $package is already installed"
+            log_info "$package is already installed"
+            apply_app_theme "$package"
+            ((success_count++))
+            continue
+        fi
+
+        gum style --foreground 81 "→ Installing $package..."
+        if yay -S --needed --noconfirm "$package"; then
+            gum style --foreground 48 "✓ $package installed successfully"
+            log_success "$package installed successfully"
+            apply_app_theme "$package"
             ((success_count++))
         else
+            gum style --foreground 196 "✗ Failed to install $package"
+            log_error "Failed to install $package"
             ((fail_count++))
         fi
         echo ""
     done
 
-    log_info "Installation completed: $success_count success, $fail_count failed"
+    [ ${#packages[@]} -gt 1 ] && log_info "Installation completed: $success_count success, $fail_count failed"
     return $fail_count
 }
 
