@@ -6,7 +6,7 @@
 install_fd() {
     log_info "Installing fd..."
     
-    if ! yay_install "fd"; then
+    if ! pacman_install "fd"; then
         return 1
     fi
     

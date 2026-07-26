@@ -4,5 +4,5 @@
 # Xournal++ note-taking app installer
 
 install_xournal_app() {
-    yay_install "xournalpp"
+    pacman_install "xournalpp"
 }

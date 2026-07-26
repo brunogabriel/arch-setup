@@ -4,5 +4,5 @@
 # Strawberry music player installer
 
 install_strawberry() {
-    yay_install "strawberry"
+    pacman_install "strawberry"
 }

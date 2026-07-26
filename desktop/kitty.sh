@@ -6,7 +6,7 @@
 install_kitty() {
     log_info "Installing kitty..."
     
-    if ! yay_install "kitty"; then
+    if ! pacman_install "kitty"; then
         return 1
     fi
     

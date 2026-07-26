@@ -6,7 +6,7 @@
 install_mise() {
     log_info "Installing mise..."
     
-    if ! yay_install "mise"; then
+    if ! pacman_install "mise"; then
         return 1
     fi
     

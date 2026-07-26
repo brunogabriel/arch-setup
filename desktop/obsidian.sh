@@ -4,5 +4,5 @@
 # Obsidian note-taking app installer
 
 install_obsidian() {
-    yay_install "obsidian"
+    pacman_install "obsidian"
 }

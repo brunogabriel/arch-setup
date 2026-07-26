@@ -6,7 +6,7 @@
 install_fzf() {
     log_info "Installing fzf..."
     
-    if ! yay_install "fzf"; then
+    if ! pacman_install "fzf"; then
         return 1
     fi
     

@@ -4,5 +4,5 @@
 # C/C++ compiler
 
 install_clang() {
-    yay_install "clang"
+    pacman_install "clang"
 }

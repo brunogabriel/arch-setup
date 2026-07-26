@@ -4,5 +4,5 @@
 # Lutris gaming platform installer
 
 install_lutris() {
-    yay_install "lutris"
+    pacman_install "lutris"
 }

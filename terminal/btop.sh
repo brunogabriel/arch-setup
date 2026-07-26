@@ -5,5 +5,5 @@
 
 # Install btop
 install_btop() {
-    yay_install "btop"
+    pacman_install "btop"
 }

@@ -6,7 +6,7 @@
 install_zoxide() {
     log_info "Installing zoxide..."
     
-    if ! yay_install "zoxide"; then
+    if ! pacman_install "zoxide"; then
         return 1
     fi
     

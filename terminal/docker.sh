@@ -7,7 +7,7 @@ install_docker() {
     log_info "Starting Docker installation..."
     
     # Install docker and docker-compose
-    if ! yay_install_multiple "docker" "docker-compose"; then
+    if ! pacman_install_multiple "docker" "docker-compose"; then
         return 1
     fi
     

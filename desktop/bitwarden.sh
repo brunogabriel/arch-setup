@@ -4,5 +4,5 @@
 # Bitwarden password manager installer
 
 install_bitwarden() {
-    yay_install "bitwarden"
+    pacman_install "bitwarden"
 }

@@ -6,7 +6,7 @@
 install_eza() {
     log_info "Installing eza..."
     
-    if ! yay_install "eza"; then
+    if ! pacman_install "eza"; then
         return 1
     fi
     

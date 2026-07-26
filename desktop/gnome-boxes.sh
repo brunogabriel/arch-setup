@@ -4,5 +4,5 @@
 # GNOME Boxes virtualization installer
 
 install_gnome_boxes() {
-    yay_install "gnome-boxes"
+    pacman_install "gnome-boxes"
 }

@@ -4,5 +4,5 @@
 # Universal package manager
 
 install_flatpak() {
-    yay_install "flatpak"
+    pacman_install "flatpak"
 }

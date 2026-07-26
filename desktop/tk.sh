@@ -4,5 +4,5 @@
 # Tk toolkit installer (Python plotting support)
 
 install_tk() {
-    yay_install "tk"
+    pacman_install "tk"
 }

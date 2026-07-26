@@ -6,7 +6,7 @@
 install_ghostty() {
     log_info "Installing ghostty..."
     
-    if ! yay_install "ghostty"; then
+    if ! pacman_install "ghostty"; then
         return 1
     fi
     

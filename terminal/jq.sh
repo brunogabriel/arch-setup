@@ -4,5 +4,5 @@
 # JSON processor
 
 install_jq() {
-    yay_install "jq"
+    pacman_install "jq"
 }

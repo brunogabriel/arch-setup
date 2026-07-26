@@ -6,7 +6,7 @@
 install_github_cli() {
     log_info "Installing GitHub CLI..."
     
-    if ! yay_install "github-cli"; then
+    if ! pacman_install "github-cli"; then
         return 1
     fi
     

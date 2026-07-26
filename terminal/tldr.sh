@@ -4,5 +4,5 @@
 # Simplified man pages
 
 install_tldr() {
-    yay_install "tldr"
+    pacman_install "tldr"
 }

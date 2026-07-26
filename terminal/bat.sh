@@ -4,5 +4,5 @@
 # Cat clone with syntax highlighting
 
 install_bat() {
-    yay_install "bat"
+    pacman_install "bat"
 }

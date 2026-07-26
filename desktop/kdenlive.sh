@@ -4,5 +4,5 @@
 # Kdenlive video editor installer
 
 install_kdenlive() {
-    yay_install "kdenlive"
+    pacman_install "kdenlive"
 }

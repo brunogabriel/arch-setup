@@ -4,5 +4,5 @@
 # DBeaver database tool installer
 
 install_dbeaver() {
-    yay_install "dbeaver"
+    pacman_install "dbeaver"
 }

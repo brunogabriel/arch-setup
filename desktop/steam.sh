@@ -6,7 +6,7 @@
 install_steam() {
     log_info "Installing Steam..."
     
-    if ! yay_install "steam"; then
+    if ! pacman_install "steam"; then
         return 1
     fi
     

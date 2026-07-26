@@ -7,7 +7,7 @@ install_zsh() {
     log_info "Installing ZSH..."
     
     # Install zsh
-    if ! yay_install "zsh"; then
+    if ! pacman_install "zsh"; then
         return 1
     fi
     

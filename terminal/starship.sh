@@ -6,7 +6,7 @@
 install_starship() {
     log_info "Installing starship..."
     
-    if ! yay_install "starship"; then
+    if ! pacman_install "starship"; then
         return 1
     fi
     

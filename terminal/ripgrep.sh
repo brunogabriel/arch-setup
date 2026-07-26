@@ -4,5 +4,5 @@
 # Fast search tool (rg)
 
 install_ripgrep() {
-    yay_install "ripgrep"
+    pacman_install "ripgrep"
 }

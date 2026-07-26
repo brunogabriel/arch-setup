@@ -6,7 +6,7 @@
 install_gufw() {
     log_info "Installing gufw..."
 
-    if ! yay_install "gufw"; then
+    if ! pacman_install "gufw"; then
         return 1
     fi
 

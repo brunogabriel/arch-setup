@@ -4,5 +4,5 @@
 # Podman Desktop installer
 
 install_podman_desktop() {
-    yay_install "podman-desktop"
+    pacman_install "podman-desktop"
 }

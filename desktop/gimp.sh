@@ -4,5 +4,5 @@
 # GIMP image editor installer
 
 install_gimp() {
-    yay_install "gimp"
+    pacman_install "gimp"
 }

@@ -6,7 +6,7 @@
 install_fastfetch() {
     log_info "Installing fastfetch..."
     
-    if ! yay_install "fastfetch"; then
+    if ! pacman_install "fastfetch"; then
         return 1
     fi
     
