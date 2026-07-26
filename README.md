@@ -35,7 +35,7 @@ cd arch-setup
 
 ### Terminal Tools
 
-fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydocker, github-cli, mise, uv, and more
+fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydocker, github-cli, mise, uv, rtk, and more
 
 ### Desktop Apps
 
