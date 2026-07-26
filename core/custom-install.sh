@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# menu_actions/custom-install.sh
+# core/custom-install.sh
 # Custom Install - select individual tools from terminal and/or desktop
 
 custom_install() {
@@ -28,17 +28,17 @@ custom_install() {
 
     # Build combined list with category prefix
     local items=()
-    local terminal_tools=($(get_terminal_tools))
-    for tool in "${terminal_tools[@]}"; do
+    while IFS= read -r tool; do
+        [ -z "$tool" ] && continue
         items+=("[T] $tool")
-    done
+    done <<< "$(get_terminal_tools)"
 
     # Include desktop apps only when a display server is available
     if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then
-        local desktop_apps=($(get_desktop_apps))
-        for app in "${desktop_apps[@]}"; do
+        while IFS= read -r app; do
+            [ -z "$app" ] && continue
             items+=("[D] $app")
-        done
+        done <<< "$(get_desktop_apps)"
     fi
 
     if [ ${#items[@]} -eq 0 ]; then
@@ -70,46 +70,10 @@ custom_install() {
 
     echo ""
 
-    local success_count=0
-    local fail_count=0
     local total
-    total=$(echo "$selected" | wc -l)
-    local current=0
+    total=$(echo "$selected" | grep -c .)
 
-    while IFS= read -r item; do
-        ((current++))
-        local category="${item:1:1}"  # T or D
-        local name="${item:4}"        # strip "[T] " or "[D] "
-        local func_name
-        func_name=$(echo "$name" | tr '-' '_')
-        local script=""
-
-        if [ "$category" = "T" ]; then
-            script="$INSTALL_DIR/terminal/${name}.sh"
-        else
-            script="$INSTALL_DIR/desktop/${name}.sh"
-        fi
-
-        log_info "[$current/$total] Installing $name..."
-        gum style --foreground 81 "[$current/$total] → Installing $name..."
-
-        if [ -f "$script" ]; then
-            if source "$script" && install_${func_name}; then
-                gum style --foreground 48 "  ✓ $name installed successfully"
-                log_success "$name installed successfully"
-                ((success_count++))
-            else
-                gum style --foreground 196 "  ✗ Failed to install $name"
-                log_error "Failed to install $name"
-                ((fail_count++))
-            fi
-        else
-            gum style --foreground 196 "  ✗ Script not found: $script"
-            log_error "Script not found: $script"
-            ((fail_count++))
-        fi
-        echo ""
-    done <<< "$selected"
+    run_installers "$selected" "" true
 
     gum style \
         --border rounded \
@@ -117,10 +81,10 @@ custom_install() {
         --padding "1 2" \
         "Custom Install Complete" \
         "" \
-        "$(gum style --foreground 48 "✓ Installed: $success_count")" \
-        "$(gum style --foreground 196 "✗ Failed: $fail_count")"
+        "$(gum style --foreground 48 "✓ Installed: $SUCCESS_COUNT")" \
+        "$(gum style --foreground 196 "✗ Failed: $FAIL_COUNT")"
 
-    log_info "Custom install completed: $success_count success, $fail_count failed"
+    log_info "Custom install completed: $SUCCESS_COUNT success, $FAIL_COUNT failed"
 
     echo ""
     gum confirm "Press Enter to continue..." && true

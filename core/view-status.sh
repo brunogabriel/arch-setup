@@ -19,8 +19,10 @@ view_installation_status() {
     echo ""
     
     # Get all tools and apps
-    local terminal_tools=($(get_terminal_tools))
-    local desktop_apps=($(get_desktop_apps))
+    local terminal_tools=()
+    local desktop_apps=()
+    while IFS= read -r t; do [ -n "$t" ] && terminal_tools+=("$t"); done <<< "$(get_terminal_tools)"
+    while IFS= read -r a; do [ -n "$a" ] && desktop_apps+=("$a"); done <<< "$(get_desktop_apps)"
     
     local installed_count=0
     local not_installed_count=0
