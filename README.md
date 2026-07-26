@@ -2,14 +2,7 @@
 
 Interactive CLI tool for automated Arch Linux-based system setup (EndeavourOS, Manjaro, etc.).
 
-This project draws inspiration from the following repositories:
-
-- [basecamp/omakub](https://github.com/basecamp/omakub)
-- [akitaonrails/omakub-mj](https://github.com/akitaonrails/omakub-mj)
-
-While arch-setup is almost a fork, I created my own to practice terminal skills and bash scripting, with some different applications and architectural decisions. If you're looking for a complete Ubuntu experience, please consider using [omakub](https://github.com/basecamp/omakub). For Manjaro, check out [omakub-mj](https://github.com/akitaonrails/omakub-mj).
-
----
+Inspired by [omakub](https://github.com/basecamp/omakub) and [omakub-mj](https://github.com/akitaonrails/omakub-mj).
 
 ## Features
 
@@ -22,8 +15,6 @@ While arch-setup is almost a fork, I created my own to practice terminal skills 
 - Installation status tracking
 - Idempotent operations
 
----
-
 ## Quick Start
 
 ### Prerequisites
@@ -35,12 +26,28 @@ While arch-setup is almost a fork, I created my own to practice terminal skills 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/arch-setup.git
+git clone https://github.com/brunogabriel/arch-setup.git
 cd arch-setup
 ./arch-setup
 ```
 
----
+## What You Get
+
+### Terminal Tools
+
+fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydocker, github-cli, mise, uv, and more
+
+### Desktop Apps
+
+ghostty, kitty, brave, chrome, vscode, cursor, obsidian, steam, bitwarden, gimp, and more
+
+### Languages (via mise)
+
+node, bun, dotnet, flutter, java
+
+### Extras
+
+bluetooth setup, firmware updates, kernel cleanup
 
 ## Project Structure
 
@@ -53,29 +60,9 @@ arch-setup/
 ├── mise_installs/          # Programming language installers (one .sh per language)
 ├── extras/                 # System/hardware extras
 ├── configs/                # Application configurations
-│   ├── fastfetch/
-│   └── zsh/
 ├── themes/                 # Theme configurations
-│   └── moonlight/
-├── AGENTS.md
-└── README.md
+└── AGENTS.md
 ```
-
----
-
-## Main Menu
-
-1. **Install All** - Install all terminal tools and desktop applications
-2. **Configure System** - Set up Git, user info, and preferences
-3. **Install Terminal Tools** - Select and install CLI tools
-4. **Install Desktop Applications** - Select and install desktop apps
-5. **Install Programming Languages** - Manage language versions via mise
-6. **System / Hardware Extras** - Bluetooth, firmware, and other extras
-7. **Custom Install** - Pick individual tools from terminal and/or desktop
-8. **View Installation Status** - Check what's installed
-9. **Exit**
-
----
 
 ## ZSH Configuration
 
@@ -94,8 +81,6 @@ Tools automatically add their configurations when installed. The system:
 - Prevents duplicate entries
 - Keeps configurations organized by purpose
 
----
-
 ## Extending arch-setup
 
 ### Adding a Terminal Tool
@@ -112,7 +97,6 @@ install_toolname() {
         return 1
     fi
 
-    # Optional: ZSH integration
     smart_append_to_zsh "aliases" \
         "alias tn='toolname'" \
         "toolname - Description"
@@ -121,26 +105,7 @@ install_toolname() {
 }
 ```
 
-The tool automatically appears in the menu.
-
-### Adding a Programming Language
-
-Create `mise_installs/language.sh`:
-
-```bash
-#!/bin/bash
-
-install_language() {
-    # Check if mise is installed
-    # Prompt for version (latest or custom)
-    # Install: mise use -g language@version
-    # Add any PATH configurations
-}
-```
-
-The language automatically appears in the languages menu.
-
-### Adding a Desktop Application
+### Adding a Desktop App
 
 Create `desktop/appname.sh`:
 
@@ -158,9 +123,27 @@ install_appname() {
 }
 ```
 
-The application automatically appears in the menu.
+### Adding a Programming Language
 
----
+Create `mise_installs/language.sh`:
+
+```bash
+#!/bin/bash
+
+install_language() {
+    if ! command -v mise &> /dev/null; then
+        gum style --foreground 196 "✗ mise not installed"
+        return 1
+    fi
+
+    local version
+    version=$(gum choose "latest (Recommended)" "Custom version")
+
+    mise use -g language@"$version"
+
+    return 0
+}
+```
 
 ## Package Sources
 
@@ -170,31 +153,21 @@ The application automatically appears in the menu.
 - **mise** - Language version management
 - **curl** - Direct installation for select tools
 
-All dependencies are installed automatically when needed.
-
----
-
 ## Logging
 
 All operations are logged to `~/.config/arch-setup/arch-setup.log`
-
----
 
 ## Contributing
 
 Contributions are welcome! See [AGENTS.md](AGENTS.md) for coding guidelines.
 
----
-
 ## License
 
 arch-setup is released under the [MIT License](https://opensource.org/license/MIT).
 
----
-
 ## Credits
 
-This project was inspired by:
+Inspired by:
 
 - [basecamp/omakub](https://github.com/basecamp/omakub) - The original Ubuntu setup tool
 - [akitaonrails/omakub-mj](https://github.com/akitaonrails/omakub-mj) - Manjaro adaptation
