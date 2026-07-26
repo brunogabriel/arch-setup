@@ -21,5 +21,18 @@ install_ghostty() {
         log_warning "Failed to apply ghostty theme, using defaults"
     fi
     
+    # Replace desktop file with custom config (x11 backend + single instance)
+    local desktop_file="$INSTALL_DIR/configs/ghostty/com.mitchellh.ghostty.desktop"
+    local target="/usr/share/applications/com.mitchellh.ghostty.desktop"
+    
+    if [ -f "$desktop_file" ]; then
+        log_info "Applying custom Ghostty desktop entry..."
+        if sudo cp "$desktop_file" "$target"; then
+            log_success "Ghostty desktop entry updated"
+        else
+            log_warning "Failed to update desktop entry (may need sudo)"
+        fi
+    fi
+    
     return 0
 }

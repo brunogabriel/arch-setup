@@ -22,12 +22,25 @@ install_zsh() {
         return 1
     fi
     
-    # Prompt to change default shell
+    # Set ZSH as default shell
+    local current_shell=$(getent passwd "$USER" | cut -d: -f7)
+    local zsh_path=$(which zsh)
+    
+    if [ "$current_shell" = "$zsh_path" ]; then
+        log_info "ZSH is already the default shell"
+        gum style --foreground 48 "✓ ZSH is already your default shell"
+    else
+        log_info "Setting ZSH as default shell..."
+        if chsh -s "$zsh_path"; then
+            log_success "ZSH set as default shell"
+            gum style --foreground 48 "✓ ZSH is now your default shell"
+        else
+            log_warning "Failed to change default shell (may need sudo)"
+            gum style --foreground 214 "⚠ Could not set ZSH as default. Run: chsh -s $zsh_path"
+        fi
+    fi
+    
     log_info "ZSH installed successfully"
-    echo ""
-    gum style --foreground 81 "To set ZSH as your default shell, run:"
-    gum style --foreground 75 "  chsh -s \$(which zsh)"
-    echo ""
     
     return 0
 }

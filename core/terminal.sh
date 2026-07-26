@@ -6,15 +6,25 @@
 # Get available terminal tools
 get_terminal_tools() {
     local tools=()
+    local has_zsh=false
     
     # Scan terminal/ directory for .sh files
     if [ -d "$INSTALL_DIR/terminal" ]; then
         for script in "$INSTALL_DIR/terminal"/*.sh; do
             if [ -f "$script" ]; then
                 local tool_name=$(basename "$script" .sh)
-                tools+=("$tool_name")
+                if [ "$tool_name" = "zsh" ]; then
+                    has_zsh=true
+                else
+                    tools+=("$tool_name")
+                fi
             fi
         done
+    fi
+    
+    # Add zsh first if it exists (makes it default terminal early)
+    if $has_zsh; then
+        tools=("zsh" "${tools[@]}")
     fi
     
     echo "${tools[@]}"
