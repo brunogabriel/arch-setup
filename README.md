@@ -64,6 +64,10 @@ arch-setup/
 └── AGENTS.md
 ```
 
+## Architecture
+
+`arch-setup` sources all `core/*.sh` modules in order, then enters a menu loop. Installer scripts in `terminal/`, `desktop/`, `extras/`, `mise_installs/` are auto-discovered — **adding a new tool = creating a new file**.
+
 ## ZSH Configuration
 
 arch-setup uses a modular ZSH configuration system:
@@ -93,7 +97,7 @@ Create `terminal/toolname.sh`:
 install_toolname() {
     log_info "Installing toolname..."
 
-    if ! yay_install "package-name"; then
+    if ! pacman_install "package-name"; then
         return 1
     fi
 
@@ -115,13 +119,15 @@ Create `desktop/appname.sh`:
 install_appname() {
     log_info "Installing appname..."
 
-    if ! yay_install "package-name"; then
+    if ! pacman_install "package-name"; then
         return 1
     fi
 
     return 0
 }
 ```
+
+Use `yay_install` instead of `pacman_install` only for AUR-only packages.
 
 ### Adding a Programming Language
 
@@ -147,11 +153,10 @@ install_language() {
 
 ## Package Sources
 
-- **pacman** - Official Arch-based repositories
-- **yay** - AUR (Arch User Repository)
-- **flatpak** - For select applications
-- **mise** - Language version management
-- **curl** - Direct installation for select tools
+- **pacman** — Official repos (default)
+- **yay** — AUR only (proprietary binaries, niche apps)
+- **mise** — Language version management
+- **curl** — Direct installation for select tools (opencode, maestro, copilot)
 
 ## Logging
 
