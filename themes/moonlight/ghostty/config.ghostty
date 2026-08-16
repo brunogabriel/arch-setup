@@ -55,6 +55,6 @@ window-titlebar-foreground = #e4f3fa
 # Misc
 confirm-close-surface = false
 
-# Keybinds
 keybind = alt+left=esc:b
 keybind = alt+right=esc:f
+keybind = ctrl+shift+x=close_surface
