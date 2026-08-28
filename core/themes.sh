@@ -223,9 +223,6 @@ apply_app_theme() {
         alacritty)
             apply_theme_for_app "alacritty" "$HOME/.config/alacritty"
             ;;
-        neovim|nvim)
-            apply_theme_for_app "neovim" "$HOME/.config/nvim"
-            ;;
         *)
             log_info "No theme configuration defined for $app_name"
             return 0
