@@ -42,9 +42,9 @@ view_installation_status() {
         
         # Special cases for command names and checks
         case "$tool" in
-            "github-copilot-cli") check_cmd="copilot" ;;
             "github-cli") check_cmd="gh" ;;
             "opencode") check_cmd="opencode" ;;
+            "pi-coding") check_cmd="pi" ;;
             "ripgrep") check_cmd="rg" ;;
             "fonts") 
                 # Check if any nerd font is installed
@@ -65,7 +65,9 @@ view_installation_status() {
         [ "$is_installed" = true ] && continue
         
         if command -v "$check_cmd" &> /dev/null; then
-            local version=$(command $check_cmd --version 2>/dev/null | head -n1 | cut -d' ' -f1-3 || echo "installed")
+            local version
+            version=$(command "$check_cmd" --version 2>/dev/null | head -n1 | cut -d' ' -f1-3)
+            [ -n "$version" ] || version="installed"
             gum style --foreground 48 "  ✓ $display_name ($version)"
             ((installed_count++))
         else
@@ -94,12 +96,20 @@ view_installation_status() {
             "chrome") check_cmd="google-chrome-stable" ;;
             "vscode") check_cmd="code" ;;
             "brave") check_cmd="brave" ;;
-            "cursor") check_cmd="cursor" ;;
             "jetbrains-toolbox") check_cmd="jetbrains-toolbox" ;;
             "bitwarden") check_cmd="bitwarden-desktop" ;;
             "heroic-games-launcher") check_cmd="heroic" ;;
             "xournal-app") check_cmd="xournalpp" ;;
-            "lsfg-vk") check_cmd="lsfg-vk-ui" ;;
+            "lsfg-vk")
+                if command -v lsfg-vk-ui &> /dev/null || pacman -Q lsfg-vk &> /dev/null; then
+                    gum style --foreground 48 "  ✓ $display_name (installed)"
+                    ((installed_count++))
+                else
+                    gum style --foreground 245 "  ○ $display_name (not installed)"
+                    ((not_installed_count++))
+                fi
+                is_installed=true
+                ;;
             "caffeine-ng") check_cmd="caffeine" ;;
             "podman-desktop") 
                 # Check via flatpak (io.podman_desktop.PodmanDesktop)
