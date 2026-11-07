@@ -21,11 +21,11 @@ get_available_themes() {
 
 # Get current theme from user config
 get_current_theme() {
-    local current_theme="moonlight" # Default
+    local current_theme="tokyo-night" # Default
     
     if [ -f "$USER_CONFIG_FILE" ]; then
         source "$USER_CONFIG_FILE"
-        current_theme="${SELECTED_THEME:-moonlight}"
+        current_theme="${SELECTED_THEME:-tokyo-night}"
     fi
     
     echo "$current_theme"
