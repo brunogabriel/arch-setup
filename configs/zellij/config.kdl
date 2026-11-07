@@ -12,3 +12,9 @@ keybinds {
         bind "Ctrl Shift Right" { GoToNextTab; }
     }
 }
+
+plugins {
+    compact-bar location="zellij:compact-bar" {
+        tooltip "F1"
+    }
+}
