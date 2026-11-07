@@ -31,7 +31,7 @@ load_user_config() {
 save_user_config() {
     local name=$1
     local email=$2
-    local theme=${3:-"moonlight"}  # Default to moonlight if not provided
+    local theme=${3:-"tokyo-night"}  # Default to tokyo-night if not provided
     
     ensure_config_dir
     
