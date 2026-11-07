@@ -1,0 +1,14 @@
+// Zellij built-in keybindings plus Kitty-like tab shortcuts.
+theme "tokyonight_moon"
+default_layout "compact"
+default_mode "normal"
+show_startup_tips false
+
+keybinds {
+    normal {
+        bind "Ctrl Shift t" { NewTab; }
+        bind "Ctrl Shift q" { CloseTab; }
+        bind "Ctrl Shift Left" { GoToPreviousTab; }
+        bind "Ctrl Shift Right" { GoToNextTab; }
+    }
+}

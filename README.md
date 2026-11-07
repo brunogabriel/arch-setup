@@ -35,11 +35,11 @@ cd arch-setup
 
 ### Terminal Tools
 
-fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydocker, github-cli, mise, uv, rtk, and more
+Alacritty, Zellij, fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydocker, github-cli, mise, uv, rtk, and more
 
 ### Desktop Apps
 
-ghostty, kitty, brave, chrome, vscode, cursor, obsidian, steam, bitwarden, gimp, and more
+kitty, brave, chrome, vscode, cursor, obsidian, steam, bitwarden, gimp, and more
 
 ### Languages (via mise)
 
