@@ -31,9 +31,18 @@ update_pacman_once_daily() {
         return 0
     fi
     
-    # Update pacman
+    # Update pacman (optional — ask the user before a full system upgrade)
+    gum style --foreground 214 "⚠ Pacman database hasn't been updated in $hours_diff hours"
+    log_info "Pacman update available (last update: $hours_diff hours ago)"
+
+    if ! gum confirm "Update pacman database and upgrade the system?"; then
+        gum style --foreground 75 "  Pacman update skipped (will ask again on the next run)"
+        log_warning "Pacman update skipped by user"
+        return 0
+    fi
+
     gum style --foreground 81 "→ Updating pacman database..."
-    log_info "Updating pacman database (last update: $hours_diff hours ago)..."
+    log_info "Updating pacman database..."
     
     if sudo pacman -Syyuu --noconfirm; then
         gum style --foreground 48 "✓ Pacman updated successfully"
