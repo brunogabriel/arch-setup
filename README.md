@@ -11,6 +11,7 @@ Inspired by [omakub](https://github.com/basecamp/omakub) and [omakub-mj](https:/
 - Automatic ZSH configuration system
 - Smart dependency resolution
 - Theme support for select applications
+- App-specific integrations for Herdr App and future plugin hosts
 - Programming language version management via mise
 - Installation status tracking
 - Idempotent operations
@@ -60,6 +61,7 @@ arch-setup/
 ├── mise_installs/          # Programming language installers (one .sh per language)
 ├── extras/                 # System/hardware extras
 ├── configs/                # Application configurations
+├── plugins/                # App-specific integrations (one folder per host app)
 ├── themes/                 # Theme configurations
 └── AGENTS.md
 ```
@@ -67,6 +69,11 @@ arch-setup/
 ## Architecture
 
 `arch-setup` sources all `core/*.sh` modules in order, then enters a menu loop. Installer scripts in `terminal/`, `desktop/`, `extras/`, `mise_installs/` are auto-discovered — **adding a new tool = creating a new file**.
+
+App-specific plugins live in `plugins/<application>/` and are installed by that
+application's installer. `plugins/herdr-app/` is named **Arch Setup** and adds
+the Codex usage bar and personal layout to Herdr App. The main menu's **Plugins**
+item discovers plugin folders containing `plugin.json` and `install.sh`.
 
 ## ZSH Configuration
 

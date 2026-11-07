@@ -26,6 +26,7 @@ source "$INSTALL_DIR/core/install-all.sh"
 source "$INSTALL_DIR/core/view-status.sh"
 source "$INSTALL_DIR/core/custom-install.sh"
 source "$INSTALL_DIR/core/exit.sh"
+source "$INSTALL_DIR/core/plugins.sh"
 
 # Menu items — add new entries here only: (title, action function)
 MENU_TITLES=(
@@ -35,6 +36,7 @@ MENU_TITLES=(
     "Install Desktop Applications"
     "Install Programming Languages (mise)"
     "System / Hardware Extras"
+    "Plugins"
     "Custom Install"
     "View Installation Status"
     "Exit"
@@ -46,6 +48,7 @@ MENU_ACTIONS=(
     "install_desktop_apps"
     "install_programming_language"
     "install_extras"
+    "install_plugins"
     "custom_install"
     "view_installation_status"
     "menu_exit"
