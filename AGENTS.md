@@ -14,6 +14,13 @@ Installer scripts in `terminal/`, `desktop/`, `extras/`, `mise_installs/` are au
 
 The file `foo-bar.sh` must define `install_foo_bar()` (dashes → underscores). `run-installers.sh` handles sourcing + calling + result tracking.
 
+### App-specific plugins
+
+Application integrations that bundle multiple mods/config files live under
+`plugins/<application>/`. They are installed by the matching `desktop/<application>.sh`
+installer rather than scanned as standalone desktop apps. Keep a plugin's
+manifest, setup script, payload, and installation notes together in that folder.
+
 ### Core modules
 
 | Module | Role |

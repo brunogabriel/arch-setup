@@ -4,6 +4,9 @@
 # Herdr app installer (desktop app; herdr CLI is installed separately)
 
 install_herdr_app() {
+    local herdr_app_home="${HERDR_APP_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}/herdr-app}"
+    local themes_dir="$herdr_app_home/themes"
+
     log_info "Starting Herdr app installation..."
 
     gum style --foreground 81 "→ Downloading and installing Herdr app..."
@@ -17,13 +20,18 @@ install_herdr_app() {
 
         # Ship the Tokyo Night Moon theme (as in themes/tokyo-night); the app
         # auto-discovers themes/*.json in its settings screen.
-        themes_dir="$HOME/.config/herdr-app/themes"
         mkdir -p "$themes_dir"
         if cp "$INSTALL_DIR/configs/herdr-app/themes/tokyonight-moon.json" "$themes_dir/"; then
             gum style --foreground 48 "✓ Herdr app Tokyo Night Moon theme installed"
             log_success "Herdr app theme installed"
         else
             log_warning "Failed to install Herdr app theme"
+        fi
+
+        if ! bash "$INSTALL_DIR/plugins/herdr-app/install.sh"; then
+            gum style --foreground 196 "✗ Failed to install Arch Setup's Herdr App plugin"
+            log_error "Failed to install Arch Setup's Herdr App plugin"
+            return 1
         fi
 
         return 0
