@@ -4,6 +4,7 @@
 import json
 import os
 import selectors
+import shutil
 import subprocess
 import sys
 import time
@@ -45,11 +46,27 @@ def window(raw):
     }
 
 
+def codex_executable():
+    executable = shutil.which("codex")
+    if executable:
+        return executable
+
+    for candidate in (
+        os.path.expanduser("~/.local/bin/codex"),
+        os.path.expanduser("~/.cargo/bin/codex"),
+        "/usr/bin/codex",
+    ):
+        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            return candidate
+    raise FileNotFoundError("codex CLI not found")
+
+
 def main():
     proc = subprocess.Popen(
         [
-            "codex", "-c", "approval_policy=never", "-c", "features.plugins=false",
-            "-s", "read-only", "-a", "never", "app-server",
+            codex_executable(), "-c", "approval_policy=never",
+            "-c", "features.plugins=false", "-s", "read-only",
+            "-a", "never", "app-server",
         ],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
@@ -62,7 +79,7 @@ def main():
     try:
         rpc(proc, selector, pending, {
             "method": "initialize", "id": 1,
-            "params": {"clientInfo": {"name": "herdr-codex-usage", "version": "1.0.0"}},
+            "params": {"clientInfo": {"name": "arch-setup-ai-usage", "version": "0.1.0"}},
         }, 1)
         proc.stdin.write(b'{"method":"initialized","params":{}}\n')
         proc.stdin.flush()
@@ -72,13 +89,10 @@ def main():
         limits = result.get("rateLimits") or {}
         if not isinstance(limits, dict):
             raise RuntimeError("invalid_result")
-        credits = result.get("rateLimitResetCredits")
         print(json.dumps({
             "ok": True,
-            "planType": limits.get("planType"),
             "primary": window(limits.get("primary")),
             "secondary": window(limits.get("secondary")),
-            "resetCredits": credits.get("availableCount") if isinstance(credits, dict) else None,
             "readAt": int(time.time()),
         }, separators=(",", ":")))
     finally:
@@ -94,6 +108,6 @@ def main():
 
 try:
     main()
-except Exception:
-    print('{"ok":false,"error":"quota_unavailable"}')
+except Exception as error:
+    print(json.dumps({"ok": False, "error": str(error)}))
     sys.exit(1)

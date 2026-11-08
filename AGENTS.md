@@ -14,12 +14,12 @@ Installer scripts in `terminal/`, `desktop/`, `extras/`, `mise_installs/` are au
 
 The file `foo-bar.sh` must define `install_foo_bar()` (dashes → underscores). `run-installers.sh` handles sourcing + calling + result tracking.
 
-### App-specific plugins
+### Plugins
 
-Application integrations that bundle multiple mods/config files live under
-`plugins/<application>/`. They are installed by the matching `desktop/<application>.sh`
-installer rather than scanned as standalone desktop apps. Keep a plugin's
-manifest, setup script, payload, and installation notes together in that folder.
+Plugins live under `plugins/<section>/<plugin-id>/`, with a `plugin.json`,
+`install.sh`, payload, and installation notes together. The single **Plugins**
+menu discovers sections and offers multi-select installation. KDE plugins live
+under `plugins/kde/`; that section is only available in a KDE Plasma session.
 
 ### Core modules
 
@@ -31,6 +31,7 @@ manifest, setup script, payload, and installation notes together in that folder.
 | `requirements.sh` | Installs `gum` (via raw `echo` before gum exists), then `check_installation_requirements()` for curl/git/unzip/base-devel/yay |
 | `install-utils.sh` | `pacman_install`, `yay_install`, `pacman_uninstall`, `yay_uninstall`, `is_installed` |
 | `run-installers.sh` | `scan_installers(subdir)`, `run_installers(items, subdir, show_progress)`, `show_install_summary()` |
+| `plugins.sh` | Plugin sections, desktop filtering, multi-select installation |
 | `zsh-config.sh` | `smart_append_to_zsh(module, code, description)` — idempotent, modular (`~/.init`, `~/.aliases`, `~/.shell`) |
 | `themes.sh` | `apply_app_theme(name)`, `apply_theme_for_app(name, dir)` |
 

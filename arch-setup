@@ -58,7 +58,7 @@ MENU_ACTIONS=(
 main_menu() {
     while true; do
         clear
-        
+
         # Header
         gum style \
             --border double \

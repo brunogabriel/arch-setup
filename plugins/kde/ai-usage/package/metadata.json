@@ -1,0 +1,22 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "io.github.archsetup.ai-usage",
+    "Name": "AI Usage",
+    "Description": "AI provider usage limits in the Plasma panel",
+    "Icon": "arch-setup-ai-providers-usage-symbolic",
+    "Category": "System Information",
+    "License": "MIT",
+    "Version": "0.1.0",
+    "Authors": [
+      {
+        "Name": "Bruno Gabriel"
+      }
+    ],
+    "EnabledByDefault": false,
+    "FormFactors": ["desktop"]
+  },
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-NotificationArea": "true",
+  "X-Plasma-NotificationAreaCategory": "ApplicationStatus"
+}
