@@ -3,6 +3,8 @@ theme "tokyonight_moon"
 default_layout "compact"
 default_mode "normal"
 show_startup_tips false
+// Keep mouse scrolling from opening the compact-bar scroll-mode tooltip.
+scroll_mode_sync false
 
 keybinds {
     normal {
