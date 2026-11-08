@@ -5,6 +5,7 @@ import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.plasmoid
+import org.kde.plasma.extras as PlasmaExtras
 import org.kde.plasma.plasma5support as Plasma5Support
 import "../code/ProviderRegistry.js" as ProviderRegistry
 
@@ -47,10 +48,13 @@ PlasmoidItem {
         }
     }
 
-    fullRepresentation: ColumnLayout {
+    fullRepresentation: PlasmaExtras.Representation {
         Layout.minimumWidth: Kirigami.Units.gridUnit * 16
         Layout.preferredWidth: Kirigami.Units.gridUnit * 18
         Layout.minimumHeight: Kirigami.Units.gridUnit * 12
+        Layout.preferredHeight: Kirigami.Units.gridUnit * 16
+
+        contentItem: ColumnLayout {
         spacing: Kirigami.Units.largeSpacing
 
         RowLayout {
@@ -119,12 +123,18 @@ PlasmoidItem {
             Layout.fillWidth: true
         }
 
-        Repeater {
+        ListView {
+            id: limitsView
             model: root.providerData.limits || []
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            clip: true
+            spacing: Kirigami.Units.largeSpacing
+            boundsBehavior: Flickable.StopAtBounds
             delegate: ColumnLayout {
                 id: limitRow
                 required property var modelData
-                Layout.fillWidth: true
+                width: limitsView.width
                 spacing: Kirigami.Units.smallSpacing
 
                 RowLayout {
@@ -167,7 +177,7 @@ PlasmoidItem {
             Layout.fillWidth: true
         }
 
-        Item { Layout.fillHeight: true }
+        }
     }
 
     Plasma5Support.DataSource {
@@ -197,7 +207,7 @@ PlasmoidItem {
         var limits = providerData.limits || []
         if (limits.length === 0)
             return !provider ? "Nada configurado ainda" : "—"
-        return Math.round(limits[0].remaining) + "%"
+        return Math.round(limits[0].remaining) + "% left"
     }
 
     function refresh() {
