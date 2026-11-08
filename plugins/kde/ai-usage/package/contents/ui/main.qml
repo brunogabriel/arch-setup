@@ -49,10 +49,12 @@ PlasmoidItem {
     }
 
     fullRepresentation: PlasmaExtras.Representation {
-        Layout.minimumWidth: Kirigami.Units.gridUnit * 16
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 18
+        Layout.minimumWidth: Kirigami.Units.gridUnit * 12
+        Layout.preferredWidth: Kirigami.Units.gridUnit * 14
         Layout.minimumHeight: Kirigami.Units.gridUnit * 12
         Layout.preferredHeight: Kirigami.Units.gridUnit * 16
+        leftPadding: Kirigami.Units.gridUnit / 2
+        rightPadding: Kirigami.Units.gridUnit / 2
 
         contentItem: ColumnLayout {
         spacing: Kirigami.Units.largeSpacing
@@ -165,6 +167,7 @@ PlasmoidItem {
                     text: limitRow.modelData.description
                     opacity: 0.75
                     Layout.fillWidth: true
+                    wrapMode: Text.Wrap
                 }
             }
         }
