@@ -48,7 +48,10 @@ custom_install() {
     fi
 
     gum style --foreground 81 --bold "Select tools to install:"
+    local toggle_key
+    toggle_key=$(gum_multiselect_toggle_key)
     gum style --foreground 75 "[T] = Terminal tool  |  [D] = Desktop application"
+    gum style --foreground 75 "$toggle_key=toggle | Enter=confirm"
     echo ""
 
     local selected
@@ -57,7 +60,7 @@ custom_install() {
         --height 20 \
         --cursor.foreground 81 \
         --selected.foreground 48 \
-        --header "Space=toggle | Enter=confirm" \
+        --header "$toggle_key=toggle | Enter=confirm" \
         --header.foreground 75 \
         "${items[@]}")
 

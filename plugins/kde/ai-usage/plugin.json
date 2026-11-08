@@ -1,0 +1,5 @@
+{
+  "name": "AI Usage for Plasma",
+  "application": "KDE Plasma 6",
+  "description": "Provider-adapter based AI quota widget for the Plasma panel"
+}

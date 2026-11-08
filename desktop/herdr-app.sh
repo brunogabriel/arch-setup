@@ -28,12 +28,6 @@ install_herdr_app() {
             log_warning "Failed to install Herdr app theme"
         fi
 
-        if ! bash "$INSTALL_DIR/plugins/herdr-app/install.sh"; then
-            gum style --foreground 196 "✗ Failed to install Arch Setup's Herdr App plugin"
-            log_error "Failed to install Arch Setup's Herdr App plugin"
-            return 1
-        fi
-
         return 0
     else
         gum style --foreground 196 "✗ Failed to install Herdr app"
