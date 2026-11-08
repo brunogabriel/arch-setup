@@ -73,25 +73,25 @@ run_installers() {
 
             if [ "$show_progress" = true ]; then
                 log_info "[$current/$total] Installing $name..."
-                gum style --foreground 81 "[$current/$total] → Installing $name..."
+                gum style --foreground "$UI_ACCENT" "[$current/$total] → Installing $name..."
             else
                 log_info "Installing $name..."
-                gum style --foreground 81 "→ Installing $name..."
+                gum style --foreground "$UI_ACCENT" "→ Installing $name..."
             fi
 
             if source "$script" && "install_${func_name}"; then
-                gum style --foreground 48 "✓ $name installed successfully"
+                gum style --foreground "$UI_SUCCESS" "✓ $name installed successfully"
                 log_success "$name installed successfully"
                 ((SUCCESS_COUNT++))
             else
-                gum style --foreground 196 "✗ Failed to install $name"
+                gum style --foreground "$UI_ERROR" "✗ Failed to install $name"
                 log_error "Failed to install $name"
                 ((FAIL_COUNT++))
             fi
 
             echo ""
         else
-            gum style --foreground 196 "✗ Script not found: $script"
+            gum style --foreground "$UI_ERROR" "✗ Script not found: $script"
             log_error "Script not found: $script"
             ((FAIL_COUNT++))
         fi
@@ -114,13 +114,13 @@ show_install_summary() {
 
     gum style \
         $border_flag \
-        --border-foreground 81 \
+        --border-foreground "$UI_ACCENT" \
         --padding "1 2" \
         $bold_flag \
         "$title" \
         "" \
-        "$(gum style --foreground 48 "✓ Success: $SUCCESS_COUNT")" \
-        "$(gum style --foreground 196 "✗ Failed: $FAIL_COUNT")" \
+        "$(gum style --foreground "$UI_SUCCESS" "✓ Success: $SUCCESS_COUNT")" \
+        "$(gum style --foreground "$UI_ERROR" "✗ Failed: $FAIL_COUNT")" \
         ${extra_lines:+$(printf '\n%s' "$extra_lines")}
 
     log_info "$title: $SUCCESS_COUNT success, $FAIL_COUNT failed"

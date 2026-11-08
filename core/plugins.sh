@@ -58,19 +58,6 @@ get_plugin_name() {
     printf '%s' "$name"
 }
 
-# Gum 2.x currently has a regression where Space no longer toggles a choice;
-# `x` works. Keep the prompt accurate and never advertise Tab as a selector.
-gum_multiselect_toggle_key() {
-    local version major
-    version=$(gum --version 2>/dev/null | sed -nE 's/.*version ([0-9]+).*/\1/p')
-    major=${version:-0}
-    if [ "$major" -ge 2 ]; then
-        printf 'x'
-    else
-        printf 'Space'
-    fi
-}
-
 install_plugins() {
     log_info "Opening plugin installer..."
 
@@ -100,31 +87,19 @@ install_plugins() {
     done <<< "$(get_available_plugin_sections)"
 
     if [ "${#plugin_dirs[@]}" -eq 0 ]; then
-        gum style --foreground 214 "⚠ No plugins available for this desktop session"
+        gum style --foreground "$UI_WARNING" "⚠ No plugins available for this desktop session"
         log_warning "No plugins available for this desktop session"
         gum confirm "Press Enter to continue..." && true
         return 0
     fi
 
-    local toggle_key
-    toggle_key=$(gum_multiselect_toggle_key)
-    gum style --foreground 81 --bold "Select plugins to install or update:"
-    gum style --foreground 75 "[KDE] = KDE Plasma plugin"
-    gum style --foreground 75 "$toggle_key=toggle | Enter=confirm | Esc=cancel"
-    echo ""
+    ui_header "Plugins" "[KDE] KDE Plasma integration"
 
     local selected
-    selected=$(gum choose \
-        --no-limit \
-        --height 20 \
-        --cursor.foreground 81 \
-        --selected.foreground 48 \
-        --header "$toggle_key=toggle | Enter=confirm" \
-        --header.foreground 75 \
-        "${plugin_choices[@]}") || return 0
+    selected=$(ui_multiselect "Choose plugins" false "${plugin_choices[@]}") || return 0
 
     if [ -z "$selected" ]; then
-        gum style --foreground 214 "No plugins selected"
+        gum style --foreground "$UI_WARNING" "No plugins selected"
         log_info "User selected no plugins"
         return 0
     fi
@@ -144,14 +119,14 @@ install_plugins() {
         done
 
         if [ -z "$plugin_dir" ] || [ ! -f "$plugin_dir/install.sh" ]; then
-            gum style --foreground 196 "✗ Could not find the selected plugin installer"
+            gum style --foreground "$UI_ERROR" "✗ Could not find the selected plugin installer"
             log_error "Could not resolve selected plugin: $selected_choice"
             ((fail_count++))
             continue
         fi
 
         if [ "${plugin_sections[$index]:-}" = "kde" ] && ! is_kde_plasma; then
-            gum style --foreground 196 "✗ KDE plugins can only be installed in a KDE Plasma session"
+            gum style --foreground "$UI_ERROR" "✗ KDE plugins can only be installed in a KDE Plasma session"
             log_warning "Blocked KDE plugin installation outside a KDE Plasma session"
             ((fail_count++))
             continue
@@ -160,11 +135,11 @@ install_plugins() {
         plugin_name=$(get_plugin_name "$plugin_dir/plugin.json")
         log_info "Installing plugin: $plugin_name"
         if bash "$plugin_dir/install.sh"; then
-            gum style --foreground 48 "✓ $plugin_name plugin installed successfully"
+            gum style --foreground "$UI_SUCCESS" "✓ $plugin_name plugin installed successfully"
             log_success "$plugin_name plugin installed successfully"
             ((success_count++))
         else
-            gum style --foreground 196 "✗ Failed to install $plugin_name plugin"
+            gum style --foreground "$UI_ERROR" "✗ Failed to install $plugin_name plugin"
             log_error "Failed to install $plugin_name plugin"
             ((fail_count++))
         fi
@@ -172,12 +147,12 @@ install_plugins() {
 
     gum style \
         --border rounded \
-        --border-foreground 81 \
+        --border-foreground "$UI_ACCENT" \
         --padding "1 2" \
         "Plugin Installation Complete" \
         "" \
-        "$(gum style --foreground 48 "✓ Installed: $success_count")" \
-        "$(gum style --foreground 196 "✗ Failed: $fail_count")"
+        "$(gum style --foreground "$UI_SUCCESS" "✓ Installed: $success_count")" \
+        "$(gum style --foreground "$UI_ERROR" "✗ Failed: $fail_count")"
 
     log_info "Plugin installation completed: $success_count success, $fail_count failed"
     gum confirm "Press Enter to continue..." && true

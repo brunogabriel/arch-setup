@@ -29,17 +29,12 @@ get_terminal_tools() {
 install_terminal_tools() {
     log_info "Starting terminal tools installation..."
 
-    gum style \
-        --border rounded \
-        --border-foreground 81 \
-        --padding "1 2" \
-        --bold \
-        "Terminal Tools Installation"
+    ui_header "Terminal Tools" "Select the tools you want to install."
 
     echo ""
 
     if ! check_installation_requirements; then
-        gum style --foreground 196 "✗ Installation requirements check failed"
+        gum style --foreground "$UI_ERROR" "✗ Installation requirements check failed"
         log_error "Installation requirements check failed"
         gum confirm "Press Enter to continue..." && true
         return 1
@@ -54,38 +49,24 @@ install_terminal_tools() {
     done <<< "$(get_terminal_tools)"
 
     if [ ${#available_tools[@]} -eq 0 ]; then
-        gum style --foreground 214 "⚠ No terminal tools found in terminal/ directory"
+        gum style --foreground "$UI_WARNING" "⚠ No terminal tools found in terminal/ directory"
         log_warning "No terminal tools found"
         gum confirm "Press Enter to continue..." && true
         return 1
     fi
 
-    gum style --foreground 81 --bold "Select tools to install (all selected by default):"
-    echo ""
-
-    local all_selected
-    all_selected=$(IFS=,; echo "${available_tools[*]}")
-
     local selected_tools
-    selected_tools=$(gum choose \
-        --no-limit \
-        --height 15 \
-        --cursor.foreground 81 \
-        --selected.foreground 48 \
-        --header "Space=toggle | Enter=confirm | All selected by default" \
-        --header.foreground 75 \
-        --selected "$all_selected" \
-        "${available_tools[@]}")
+    selected_tools=$(ui_multiselect "All tools selected by default" true "${available_tools[@]}") || return 0
 
     if [ -z "$selected_tools" ]; then
-        gum style --foreground 214 "No tools selected"
+        gum style --foreground "$UI_WARNING" "No tools selected"
         log_info "User cancelled tool selection"
         gum confirm "Press Enter to continue..." && true
         return 0
     fi
 
     echo ""
-    gum style --foreground 81 "Installing selected tools..."
+    gum style --foreground "$UI_ACCENT" "Installing selected tools..."
     echo ""
 
     log_info "Selected tools: $selected_tools"

@@ -11,6 +11,7 @@ INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Load core utilities
 source "$INSTALL_DIR/core/config.sh"
 source "$INSTALL_DIR/core/colors.sh"
+source "$INSTALL_DIR/core/ui.sh"
 source "$INSTALL_DIR/core/logger.sh"
 source "$INSTALL_DIR/core/requirements.sh"
 source "$INSTALL_DIR/core/user-config.sh"
@@ -59,25 +60,18 @@ main_menu() {
     while true; do
         clear
 
-        # Header
-        gum style \
-            --border double \
-            --border-foreground 81 \
-            --align center \
-            --width 50 \
-            --padding "1 2" \
-            --margin "1 0" \
-            "$(gum style --foreground 81 --bold "$APP_NAME") $(gum style --foreground 245 "v$APP_VERSION")" \
-            "$(gum style --foreground 75 "$APP_DESCRIPTION")"
+        ui_header "ARCH SETUP" "Your system, your setup."
         
         echo ""
         
         local choice
         choice=$(gum choose \
-            --cursor.foreground 81 \
-            --header "What would you like to do?" \
-            --header.foreground 81 \
-            "${MENU_TITLES[@]}")
+            --cursor '› ' \
+            --padding "0 1" \
+            --cursor.foreground "$UI_ACCENT" \
+            --header.foreground "$UI_SECONDARY" \
+            --header "Choose an action · ↑/↓ navigate · Enter select" \
+            "${MENU_TITLES[@]}") || return 0
         
         # Dispatch: find the matching title and call its action
         local i

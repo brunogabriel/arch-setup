@@ -10,17 +10,12 @@ get_extras() {
 install_extras() {
     log_info "Starting system/hardware extras installation..."
 
-    gum style \
-        --border rounded \
-        --border-foreground 81 \
-        --padding "1 2" \
-        --bold \
-        "System / Hardware Extras"
+    ui_header "System / Hardware Extras" "Select the extras you want to install."
 
     echo ""
 
     if ! check_installation_requirements; then
-        gum style --foreground 196 "✗ Installation requirements check failed"
+        gum style --foreground "$UI_ERROR" "✗ Installation requirements check failed"
         log_error "Installation requirements check failed"
         gum confirm "Press Enter to continue..." && true
         return 1
@@ -35,38 +30,24 @@ install_extras() {
     done <<< "$(get_extras)"
 
     if [ ${#available_items[@]} -eq 0 ]; then
-        gum style --foreground 214 "⚠ No extras found in extras/ directory"
+        gum style --foreground "$UI_WARNING" "⚠ No extras found in extras/ directory"
         log_warning "No extras found"
         gum confirm "Press Enter to continue..." && true
         return 1
     fi
 
-    gum style --foreground 81 --bold "Select extras to install (all selected by default):"
-    echo ""
-
-    local all_selected
-    all_selected=$(IFS=,; echo "${available_items[*]}")
-
     local selected_items
-    selected_items=$(gum choose \
-        --no-limit \
-        --height 15 \
-        --cursor.foreground 81 \
-        --selected.foreground 48 \
-        --header "Space=toggle | Enter=confirm | All selected by default" \
-        --header.foreground 75 \
-        --selected "$all_selected" \
-        "${available_items[@]}")
+    selected_items=$(ui_multiselect "All extras selected by default" true "${available_items[@]}") || return 0
 
     if [ -z "$selected_items" ]; then
-        gum style --foreground 214 "No extras selected"
+        gum style --foreground "$UI_WARNING" "No extras selected"
         log_info "User cancelled extras selection"
         gum confirm "Press Enter to continue..." && true
         return 0
     fi
 
     echo ""
-    gum style --foreground 81 "Installing selected extras..."
+    gum style --foreground "$UI_ACCENT" "Installing selected extras..."
     echo ""
 
     log_info "Selected extras: $selected_items"
