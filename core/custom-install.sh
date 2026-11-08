@@ -6,19 +6,12 @@
 custom_install() {
     log_info "Starting custom install..."
 
-    gum style \
-        --border rounded \
-        --border-foreground 81 \
-        --padding "1 2" \
-        --bold \
-        "Custom Install" \
-        "" \
-        "$(gum style --foreground 75 "Pick individual tools and applications to install")"
+    ui_header "Custom Install" "Choose individual tools and applications."
 
     echo ""
 
     if ! check_installation_requirements; then
-        gum style --foreground 196 "✗ Installation requirements check failed"
+        gum style --foreground "$UI_ERROR" "✗ Installation requirements check failed"
         log_error "Installation requirements check failed"
         gum confirm "Press Enter to continue..." && true
         return 1
@@ -42,30 +35,19 @@ custom_install() {
     fi
 
     if [ ${#items[@]} -eq 0 ]; then
-        gum style --foreground 214 "⚠ No tools found"
+        gum style --foreground "$UI_WARNING" "⚠ No tools found"
         gum confirm "Press Enter to continue..." && true
         return 1
     fi
 
-    gum style --foreground 81 --bold "Select tools to install:"
-    local toggle_key
-    toggle_key=$(gum_multiselect_toggle_key)
-    gum style --foreground 75 "[T] = Terminal tool  |  [D] = Desktop application"
-    gum style --foreground 75 "$toggle_key=toggle | Enter=confirm"
+    gum style --foreground "$UI_SECONDARY" "[T] Terminal tool   [D] Desktop application"
     echo ""
 
     local selected
-    selected=$(gum choose \
-        --no-limit \
-        --height 20 \
-        --cursor.foreground 81 \
-        --selected.foreground 48 \
-        --header "$toggle_key=toggle | Enter=confirm" \
-        --header.foreground 75 \
-        "${items[@]}")
+    selected=$(ui_multiselect "Choose items" false "${items[@]}") || return 0
 
     if [ -z "$selected" ]; then
-        gum style --foreground 214 "No tools selected"
+        gum style --foreground "$UI_WARNING" "No tools selected"
         log_info "User cancelled custom install"
         gum confirm "Press Enter to continue..." && true
         return 0
@@ -80,12 +62,12 @@ custom_install() {
 
     gum style \
         --border rounded \
-        --border-foreground 81 \
+        --border-foreground "$UI_ACCENT" \
         --padding "1 2" \
         "Custom Install Complete" \
         "" \
-        "$(gum style --foreground 48 "✓ Installed: $SUCCESS_COUNT")" \
-        "$(gum style --foreground 196 "✗ Failed: $FAIL_COUNT")"
+        "$(gum style --foreground "$UI_SUCCESS" "✓ Installed: $SUCCESS_COUNT")" \
+        "$(gum style --foreground "$UI_ERROR" "✗ Failed: $FAIL_COUNT")"
 
     log_info "Custom install completed: $SUCCESS_COUNT success, $FAIL_COUNT failed"
 

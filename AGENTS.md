@@ -27,6 +27,7 @@ under `plugins/kde/`; that section is only available in a KDE Plasma session.
 |--------|------|
 | `config.sh` | Global vars (`INSTALL_DIR`, `CONFIG_DIR`, etc.) |
 | `colors.sh` | Arch brand colors (81 cyan, 75 blue, 48 green, 196 red, 214 orange) |
+| `ui.sh` | Terminal-theme-friendly headings and shared multi-select UI |
 | `logger.sh` | `log_info` / `log_success` / `log_warning` / `log_error` → `~/.config/arch-setup/arch-setup.log` |
 | `requirements.sh` | Installs `gum` (via raw `echo` before gum exists), then `check_installation_requirements()` for curl/git/unzip/base-devel/yay |
 | `install-utils.sh` | `pacman_install`, `yay_install`, `pacman_uninstall`, `yay_uninstall`, `is_installed` |
