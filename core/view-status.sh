@@ -100,16 +100,6 @@ view_installation_status() {
             "bitwarden") check_cmd="bitwarden-desktop" ;;
             "heroic-games-launcher") check_cmd="heroic" ;;
             "xournal-app") check_cmd="xournalpp" ;;
-            "lsfg-vk")
-                if command -v lsfg-vk-ui &> /dev/null || pacman -Q lsfg-vk &> /dev/null; then
-                    gum style --foreground 48 "  ✓ $display_name (installed)"
-                    ((installed_count++))
-                else
-                    gum style --foreground 245 "  ○ $display_name (not installed)"
-                    ((not_installed_count++))
-                fi
-                is_installed=true
-                ;;
             "caffeine-ng") check_cmd="caffeine" ;;
             "podman-desktop") 
                 # Check via flatpak (io.podman_desktop.PodmanDesktop)
