@@ -95,6 +95,7 @@ view_installation_status() {
         case "$app" in
             "chrome") check_cmd="google-chrome-stable" ;;
             "vscode") check_cmd="code" ;;
+            "zed") check_cmd="zeditor" ;;
             "brave") check_cmd="brave" ;;
             "jetbrains-toolbox") check_cmd="jetbrains-toolbox" ;;
             "bitwarden") check_cmd="bitwarden-desktop" ;;
