@@ -40,7 +40,7 @@ Alacritty, Zellij, fzf, ripgrep, bat, eza, zoxide, starship, fastfetch, lazydock
 
 ### Desktop Apps
 
-kitty, brave, chrome, vscode, cursor, obsidian, steam, bitwarden, gimp, and more
+kitty, brave, chrome, vscode, zed, cursor, obsidian, steam, bitwarden, gimp, and more
 
 ### Languages (via mise)
 
